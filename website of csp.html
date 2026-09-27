@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Think Before You Share — Social Media Awareness</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a0e27; --blue:#3b82f6; --violet:#8b5cf6; --purple:#a855f7;
+  --cyan:#06b6d4; --emerald:#10b981; --rose:#f43f5e;
+  --bg:#f0f4ff; --card:#ffffff; --card-border:#e2e8f0;
+  --text:#1e293b; --sub:#64748b; --muted:#94a3b8;
+  --lblue:#eff6ff; --lviolet:#f5f3ff; --lcyan:#ecfeff;
+  --grad:linear-gradient(135deg,var(--blue),var(--violet),var(--purple));
+  --grad2:linear-gradient(135deg,var(--cyan),var(--blue));
+  --glass:rgba(255,255,255,0.7); --glass-border:rgba(255,255,255,0.3);
+  --shadow:0 8px 32px rgba(0,0,0,0.08);
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;scroll-padding-top:80px;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;transition:all .4s ease;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:'Poppins',sans-serif;font-weight:700;letter-spacing:-0.02em;}
+
+/* Dark Mode */
+body.dark{--bg:#080c1a;--card:#0f1629;--card-border:#1e2a4a;--text:#e2e8f0;--sub:#94a3b8;--muted:#64748b;--lblue:#0f1629;--lviolet:#0f1629;--lcyan:#0f1629;--glass:rgba(15,22,41,0.8);--glass-border:rgba(255,255,255,0.08);--shadow:0 8px 32px rgba(0,0,0,0.3);--shadow-lg:0 20px 60px rgba(0,0,0,0.4);}
+body.dark header{background:rgba(8,12,26,0.9);border-color:var(--card-border);}
+body.dark .hero{background:#080c1a;}
+body.dark .section-alt{background:var(--card);}
+body.dark .logo{color:#e2e8f0;}
+body.dark .nav-links a{color:#cbd5e1;}
+body.dark .footer-section{background:#060a18;}
+
+/* Page Loader */
+.page-loader{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease;}
+.page-loader.hidden{opacity:0;visibility:hidden;}
+.loader-spinner{width:50px;height:50px;border-radius:50%;border:3px solid rgba(255,255,255,0.1);border-top-color:var(--blue);animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Scroll Progress */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;background:var(--grad);z-index:1000;width:0%;transition:width .1s linear;}
+
+/* NAV */
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(240,244,255,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--card-border);padding-top:env(safe-area-inset-top,0);transition:all .3s ease;}
+header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;}
+.logo{font-family:'Poppins',sans-serif;font-weight:900;font-size:1.15rem;color:var(--navy);display:flex;align-items:center;gap:8px;}
+.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;}
+.logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.nav-links{display:flex;gap:6px;list-style:none;}
+.nav-links a{color:var(--text);text-decoration:none;font-size:.88rem;font-weight:500;padding:8px 14px;border-radius:8px;transition:all .2s ease;position:relative;}
+.nav-links a:hover,.nav-links a.active{color:var(--blue);background:var(--lblue);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.theme-toggle{background:none;border:1.5px solid var(--card-border);border-radius:10px;padding:8px 12px;cursor:pointer;font-size:1rem;transition:all .2s ease;color:var(--text);}
+.theme-toggle:hover{border-color:var(--blue);transform:scale(1.05);}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.burger span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s ease;}
+.burger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.burger.open span:nth-child(2){opacity:0;}
+.burger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+@media(max-width:900px){
+  .nav-links{position:fixed;top:65px;left:0;right:0;background:var(--card);flex-direction:column;padding:20px;gap:4px;border-bottom:1px solid var(--card-border);transform:translateY(-150%);transition:transform .3s ease;box-shadow:var(--shadow-lg);}
+  .nav-links.open{transform:translateY(0);}
+  .burger{display:flex;}
+  .nav-right .btn-primary{display:none;}
+}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:12px;font-weight:600;font-size:.92rem;cursor:pointer;border:none;text-decoration:none;transition:all .25s ease;font-family:'Inter',sans-serif;}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 8px 24px -6px rgba(139,92,246,0.5);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 30px -6px rgba(139,92,246,0.6);}
+.btn-ghost{background:var(--card);color:var(--navy);border:1.5px solid var(--card-border);}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px);}
+.btn-sm{padding:10px 20px;font-size:.85rem;border-radius:10px;}
+
+/* LAYOUT */
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px;}
+section{padding:100px 0;}
+.section-alt{background:var(--card);}
+.section-head{max-width:680px;margin:0 auto 56px;text-align:center;}
+.section-head h2{font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--navy);margin-bottom:12px;}
+body.dark .section-head h2{color:#e2e8f0;}
+.section-head p{color:var(--sub);font-size:1.05rem;}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(0.16,1,0.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:all .8s cubic-bezier(0.16,1,0.3,1);}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(40px);transition:all .8s cubic-bezier(0.16,1,0.3,1);}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.1)}100%{transform:scale(1)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--navy);padding:120px 0 80px;}
+.hero-canvas{position:absolute;inset:0;z-index:0;}
+.hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(59,130,246,0.15) 0%,transparent 50%),radial-gradient(ellipse at 70% 30%,rgba(139,92,246,0.12) 0%,transparent 50%);z-index:1;}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center;position:relative;z-index:2;}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;text-align:center;}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:50px;background:rgba(139,92,246,0.15);color:var(--violet);font-size:.82rem;font-weight:600;margin-bottom:22px;border:1px solid rgba(139,92,246,0.2);}
+.eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--violet);animation:pulse 2s ease-in-out infinite;}
+.hero h1{font-size:clamp(2.6rem,5.5vw,4rem);color:#fff;line-height:1.08;margin-bottom:18px;}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero .sub-title{font-size:1.2rem;color:rgba(255,255,255,0.9);font-weight:600;margin-bottom:14px;}
+.hero p.hero-desc{color:rgba(255,255,255,0.6);font-size:1.02rem;max-width:520px;margin-bottom:36px;}
+@media(max-width:900px){.hero p.hero-desc{margin-inline:auto;}}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+@media(max-width:900px){.hero-actions{justify-content:center;}}
+.hero-visual{position:relative;height:380px;}
+.hero-chip{position:absolute;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:16px 18px;font-size:.88rem;font-weight:600;color:#fff;display:flex;align-items:center;gap:12px;animation:float 5s ease-in-out infinite;}
+.chip1{top:8%;left:4%;} .chip2{top:42%;right:0%;animation-delay:.8s;} .chip3{bottom:6%;left:16%;animation-delay:1.6s;}
+.chip-ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#fff;}
+.ic-blue{background:rgba(59,130,246,0.3);} .ic-violet{background:rgba(139,92,246,0.3);} .ic-navy{background:rgba(6,182,212,0.3);}
+.hero-glow{position:absolute;width:300px;height:300px;border-radius:50%;filter:blur(80px);opacity:.3;z-index:0;}
+.glow-1{background:var(--blue);top:10%;right:10%;} .glow-2{background:var(--violet);bottom:10%;left:10%;}
+
+/* STATS */
+.stats-section{background:var(--card);border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border);}
+.stat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;}
+@media(max-width:1000px){.stat-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
+.stat-card{text-align:center;padding:28px 14px;border-radius:16px;background:var(--bg);border:1px solid var(--card-border);transition:all .3s ease;}
+.stat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.stat-card .stat-icon{font-size:1.6rem;margin-bottom:10px;}
+.stat-card .stat-num{font-family:'Poppins',sans-serif;font-size:1.6rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat-card .stat-label{font-size:.78rem;color:var(--sub);margin-top:4px;font-weight:500;}
+
+/* GLASS CARDS */
+.glass-card{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-border);border-radius:20px;padding:28px;transition:all .3s ease;position:relative;overflow:hidden;}
+.glass-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.glass-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);opacity:0;transition:opacity .3s ease;}
+.glass-card:hover::before{opacity:1;}
+
+/* CARD GRIDS */
+.card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+@media(max-width:1000px){.card-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.card-grid{grid-template-columns:1fr;}}
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:18px;padding:28px;transition:all .3s ease;position:relative;overflow:hidden;}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.card .ico{width:48px;height:48px;border-radius:14px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:16px;}
+.card h4{font-size:1.05rem;color:var(--navy);margin-bottom:8px;}
+body.dark .card h4{color:#e2e8f0;}
+.card p{font-size:.9rem;color:var(--sub);line-height:1.6;}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:768px){.two-col{grid-template-columns:1fr;}}
+.panel{border-radius:20px;padding:32px;}
+.panel.good{background:linear-gradient(135deg,var(--lblue),var(--lcyan));border:1px solid #bfdbfe;}
+.panel.bad{background:linear-gradient(135deg,#fff1f2,#fef2f2);border:1px solid #fecaca;}
+body.dark .panel.good{background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.2);}
+body.dark .panel.bad{background:rgba(244,63,94,0.08);border-color:rgba(244,63,94,0.2);}
+.panel h3{margin-bottom:18px;color:var(--navy);font-size:1.2rem;}
+body.dark .panel h3{color:#e2e8f0;}
+.panel ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.panel li{font-size:.92rem;padding-left:30px;position:relative;color:var(--text);}
+.panel.good li::before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:700;font-size:1.1rem;}
+.panel.bad li::before{content:"✕";position:absolute;left:0;color:var(--rose);font-weight:700;font-size:1.1rem;}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
+@media(max-width:900px){.steps{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:560px){.steps{grid-template-columns:repeat(2,1fr);}}
+.step{background:var(--card);border-radius:16px;padding:22px 14px;text-align:center;border:1px solid var(--card-border);transition:all .3s ease;}
+.step:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.step .num{width:34px;height:34px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.88rem;margin:0 auto 12px;}
+.step p{font-size:.85rem;color:var(--sub);font-weight:500;}
+
+/* SPOT CARD */
+.spot-card{max-width:640px;margin:44px auto 0;background:var(--navy);color:#fff;border-radius:22px;padding:32px;box-shadow:var(--shadow-lg);}
+.spot-card .tag{font-size:.78rem;color:rgba(255,255,255,0.5);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;}
+.spot-card .post{background:rgba(255,255,255,0.06);border-radius:14px;padding:18px;font-size:.95rem;margin-bottom:20px;border:1px solid rgba(255,255,255,0.08);}
+.spot-actions{display:flex;gap:12px;}
+.spot-actions button{flex:1;padding:13px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:all .2s ease;font-family:'Inter',sans-serif;font-size:.9rem;}
+.spot-actions button:hover{transform:translateY(-2px);}
+.b-real{background:#fff;color:var(--navy);} .b-susp{background:var(--violet);color:#fff;}
+.spot-result{margin-top:18px;font-size:.9rem;background:rgba(139,92,246,0.2);border-radius:12px;padding:16px;display:none;border:1px solid rgba(139,92,246,0.3);}
+
+/* THINK BANNER */
+.think{background:var(--navy);color:#fff;border-radius:28px;padding:60px 40px;text-align:center;position:relative;overflow:hidden;}
+.think::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 30%,rgba(59,130,246,0.08),transparent 50%),radial-gradient(circle at 70% 70%,rgba(139,92,246,0.08),transparent 50%);}
+.think h2{color:#fff;font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:36px;position:relative;}
+.check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:800px;margin:0 auto;text-align:left;position:relative;}
+@media(max-width:768px){.check-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.check-grid{grid-template-columns:1fr;}}
+.check-item{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 18px;font-size:.9rem;transition:all .2s ease;}
+.check-item:hover{background:rgba(255,255,255,0.1);transform:translateY(-2px);}
+.tagline{margin-top:36px;font-weight:700;font-size:1.15rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;position:relative;}
+
+/* QUIZ */
+.quiz-box{max-width:660px;margin:0 auto;background:var(--card);border-radius:22px;padding:36px;border:1px solid var(--card-border);box-shadow:var(--shadow-lg);}
+.progress-bar{height:6px;background:var(--bg);border-radius:6px;overflow:hidden;margin-bottom:24px;}
+.progress-fill{height:100%;background:var(--grad);width:0%;transition:width .4s ease;}
+.q-text{font-size:1.08rem;font-weight:600;color:var(--navy);margin-bottom:20px;}
+body.dark .q-text{color:#e2e8f0;}
+.q-opts{display:flex;flex-direction:column;gap:10px;}
+.q-opt{text-align:left;padding:14px 18px;border-radius:12px;border:1.5px solid var(--card-border);background:var(--card);cursor:pointer;font-size:.92rem;transition:all .2s ease;font-family:'Inter',sans-serif;}
+.q-opt:hover{border-color:var(--blue);background:var(--lblue);}
+.q-opt.correct{border-color:var(--emerald);background:rgba(16,185,129,0.1);}
+.q-opt.wrong{border-color:var(--rose);background:rgba(244,63,94,0.1);}
+.q-explain{margin-top:16px;font-size:.88rem;color:var(--sub);background:var(--lblue);padding:14px 16px;border-radius:12px;display:none;border-left:3px solid var(--blue);}
+.quiz-result{display:none;text-align:center;}
+.quiz-result .score{font-size:3.5rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.q-timer{display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:.85rem;color:var(--sub);}
+.q-timer-bar{flex:1;height:4px;background:var(--bg);border-radius:4px;overflow:hidden;}
+.q-timer-fill{height:100%;background:var(--grad);transition:width .3s linear;}
+.q-difficulty{display:inline-block;padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:600;margin-bottom:12px;}
+.q-easy{background:rgba(16,185,129,0.1);color:var(--emerald);}
+.q-medium{background:rgba(245,158,11,0.1);color:#f59e0b;}
+.q-hard{background:rgba(244,63,94,0.1);color:var(--rose);}
+
+/* DASHBOARD */
+.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+@media(max-width:640px){.dash-grid{grid-template-columns:1fr;}}
+.ring{width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--navy);background:conic-gradient(var(--blue) calc(var(--p)*1%), var(--bg) 0);flex-shrink:0;transition:background .5s ease;}
+body.dark .ring{color:#e2e8f0;}
+.ring span{background:var(--card);width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.dash-card{display:flex;align-items:center;gap:18px;}
+.badge-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+@media(max-width:700px){.badge-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:400px){.badge-grid{grid-template-columns:repeat(2,1fr);}}
+.badge{text-align:center;padding:22px 10px;border-radius:16px;background:var(--bg);border:1px solid var(--card-border);opacity:.35;filter:grayscale(1);transition:all .4s ease;}
+.badge.unlocked{opacity:1;filter:none;background:linear-gradient(160deg,var(--lblue),var(--lviolet));border-color:rgba(139,92,246,0.2);animation:pop .5s ease;}
+.badge .bi{font-size:2rem;} .badge p{font-size:.78rem;font-weight:600;color:var(--navy);margin-top:8px;}
+body.dark .badge p{color:#e2e8f0;}
+
+/* SURVEY */
+.survey-form input,.survey-form select,.survey-form textarea{width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid var(--card-border);font-family:'Inter',sans-serif;font-size:.92rem;background:var(--card);color:var(--text);transition:border-color .2s ease;}
+.survey-form input:focus,.survey-form select:focus,.survey-form textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,0.1);}
+
+/* RESOURCES */
+.search-bar{display:flex;gap:12px;max-width:500px;margin:0 auto 36px;}
+.search-bar input{flex:1;padding:13px 18px;border-radius:12px;border:1.5px solid var(--card-border);font-size:.92rem;background:var(--card);color:var(--text);font-family:'Inter',sans-serif;}
+.search-bar input:focus{outline:none;border-color:var(--blue);}
+.res-card{background:var(--card);border-radius:18px;padding:26px;border:1px solid var(--card-border);transition:all .3s ease;}
+.res-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.res-card a{color:var(--blue);font-size:.88rem;font-weight:600;text-decoration:none;}
+.res-card a:hover{text-decoration:underline;}
+
+/* TIP CARD */
+.tip-card{max-width:600px;margin:0 auto;background:linear-gradient(135deg,var(--lblue),var(--lviolet),var(--lcyan));border-radius:22px;padding:42px;text-align:center;border:1px solid var(--card-border);}
+body.dark .tip-card{background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(139,92,246,0.08));}
+.tip-card .tip-icon{font-size:2.4rem;margin-bottom:14px;}
+.tip-card p{font-size:1.1rem;color:var(--navy);font-weight:600;min-height:60px;display:flex;align-items:center;justify-content:center;}
+body.dark .tip-card p{color:#e2e8f0;}
+
+/* PROJECT INFO */
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:44px;}
+@media(max-width:640px){.info-grid{grid-template-columns:1fr;}}
+.info-item{background:var(--card);border-radius:16px;padding:20px 22px;border:1px solid var(--card-border);}
+.info-item .lbl{font-size:.78rem;color:var(--sub);text-transform:uppercase;letter-spacing:.05em;} 
+.info-item .val{font-weight:700;color:var(--navy);font-size:.98rem;margin-top:4px;}
+body.dark .info-item .val{color:#e2e8f0;}
+
+/* TIMELINE */
+.tl{display:flex;flex-direction:column;max-width:550px;margin:0 auto;}
+.tl-item{display:flex;gap:18px;}
+.tl-dot-col{display:flex;flex-direction:column;align-items:center;}
+.tl-dot{width:16px;height:16px;border-radius:50%;background:var(--grad);flex-shrink:0;box-shadow:0 0 0 4px rgba(139,92,246,0.15);}
+.tl-line{width:2px;flex:1;background:linear-gradient(to bottom,var(--blue),var(--violet));}
+.tl-item .tl-text{padding-bottom:28px;font-size:.95rem;font-weight:600;color:var(--navy);}
+body.dark .tl-item .tl-text{color:#e2e8f0;}
+
+/* FOOTER */
+footer{background:var(--navy);color:#c9d2ec;padding:60px 0 30px;}
+.f-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:36px;margin-bottom:36px;}
+.f-top h3{color:#fff;font-family:'Poppins',sans-serif;} .f-top p{font-size:.88rem;margin-top:8px;color:#7c88af;}
+.f-links{list-style:none;display:flex;flex-wrap:wrap;gap:18px;font-size:.88rem;}
+.f-links a{color:#c9d2ec;text-decoration:none;transition:color .2s ease;}
+.f-links a:hover{color:var(--blue);}
+.f-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;text-align:center;font-size:.84rem;color:#5a6589;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(140%);background:var(--navy);color:#fff;padding:16px 26px;border-radius:14px;font-size:.9rem;box-shadow:0 20px 40px -12px rgba(0,0,0,0.4);z-index:200;transition:transform .4s cubic-bezier(0.16,1,0.3,1);max-width:90%;text-align:center;border:1px solid rgba(255,255,255,0.08);}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* BACK TO TOP */
+.back-top{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:14px;background:var(--grad);color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;z-index:90;opacity:0;visibility:hidden;transform:translateY(20px);transition:all .3s ease;box-shadow:0 8px 24px rgba(139,92,246,0.4);}
+.back-top.visible{opacity:1;visibility:visible;transform:translateY(0);}
+.back-top:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(139,92,246,0.5);}
+
+/* ANALYZER */
+.analyzer-box textarea{width:100%;padding:16px;border-radius:14px;border:1.5px solid var(--card-border);font-family:'Inter',sans-serif;font-size:.92rem;resize:vertical;min-height:110px;background:var(--card);color:var(--text);transition:border-color .2s ease;}
+.analyzer-box textarea:focus{outline:none;border-color:var(--blue);}
+.risk-badge{display:inline-block;padding:10px 22px;border-radius:22px;font-weight:700;font-size:.92rem;margin:16px 0;}
+.risk-low{background:rgba(16,185,129,0.1);color:var(--emerald);border:1px solid rgba(16,185,129,0.2);}
+.risk-mid{background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.2);}
+.risk-high{background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);}
+.indicator-list{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.9rem;color:var(--text);}
+
+/* NEW: PASSWORD STRENGTH */
+.pwd-input{position:relative;}
+.pwd-input input{width:100%;padding:14px 50px 14px 16px;border-radius:12px;border:1.5px solid var(--card-border);font-size:1rem;font-family:'Inter',sans-serif;background:var(--card);color:var(--text);}
+.pwd-input input:focus{outline:none;border-color:var(--blue);}
+.pwd-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--sub);}
+.pwd-meter{height:6px;border-radius:6px;background:var(--bg);margin:14px 0;overflow:hidden;}
+.pwd-meter-fill{height:100%;width:0%;border-radius:6px;transition:all .4s ease;}
+.pwd-criteria{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;}
+@media(max-width:500px){.pwd-criteria{grid-template-columns:1fr;}}
+.pwd-crit{font-size:.85rem;color:var(--sub);display:flex;align-items:center;gap:8px;transition:color .2s ease;}
+.pwd-crit.pass{color:var(--emerald);}
+.pwd-crit .crit-icon{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--card-border);display:flex;align-items:center;justify-content:center;font-size:.65rem;transition:all .2s ease;}
+.pwd-crit.pass .crit-icon{background:var(--emerald);border-color:var(--emerald);color:#fff;}
+
+/* NEW: PHISHING DETECTOR */
+.url-input{display:flex;gap:12px;}
+.url-input input{flex:1;padding:14px 16px;border-radius:12px;border:1.5px solid var(--card-border);font-size:.92rem;background:var(--card);color:var(--text);font-family:'Inter',sans-serif;}
+.url-input input:focus{outline:none;border-color:var(--blue);}
+.phish-result{margin-top:20px;display:none;}
+.phish-flags{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.phish-flag{display:flex;align-items:flex-start;gap:10px;font-size:.9rem;padding:10px 14px;border-radius:10px;background:var(--bg);}
+
+/* NEW: DIGITAL FOOTPRINT */
+.fp-questions{display:flex;flex-direction:column;gap:18px;}
+.fp-q{display:flex;flex-direction:column;gap:6px;}
+.fp-q label{font-size:.9rem;font-weight:600;color:var(--navy);}
+body.dark .fp-q label{color:#e2e8f0;}
+.fp-q select,.fp-q input[type=number]{padding:11px 14px;border-radius:10px;border:1.5px solid var(--card-border);font-size:.9rem;background:var(--card);color:var(--text);font-family:'Inter',sans-serif;}
+.fp-result{display:none;margin-top:24px;text-align:center;}
+.fp-visual{width:120px;height:120px;border-radius:50%;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;transition:all .5s ease;}
+.fp-small{background:rgba(16,185,129,0.1);border:3px solid var(--emerald);}
+.fp-medium{background:rgba(245,158,11,0.1);border:3px solid #f59e0b;}
+.fp-large{background:rgba(244,63,94,0.1);border:3px solid var(--rose);}
+
+/* NEW: SCREEN TIME */
+.st-inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:500px){.st-inputs{grid-template-columns:1fr;}}
+.st-item{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:var(--bg);border:1px solid var(--card-border);}
+.st-item label{font-size:.85rem;font-weight:500;flex:1;}
+.st-item input{width:70px;padding:8px;border-radius:8px;border:1.5px solid var(--card-border);text-align:center;font-size:.9rem;background:var(--card);color:var(--text);font-family:'Inter',sans-serif;}
+.st-result{display:none;margin-top:24px;}
+.st-comparison{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+@media(max-width:600px){.st-comparison{grid-template-columns:1fr;}}
+.st-comp{text-align:center;padding:20px 14px;border-radius:14px;background:var(--bg);border:1px solid var(--card-border);}
+.st-comp .comp-num{font-size:1.8rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+
+/* NEW: MYTH VS FACT */
+.mvf-card{text-align:center;}
+.mvf-statement{font-size:1.1rem;font-weight:600;color:var(--navy);margin:20px 0;min-height:60px;display:flex;align-items:center;justify-content:center;padding:20px;border-radius:14px;background:var(--bg);border:1px solid var(--card-border);}
+body.dark .mvf-statement{color:#e2e8f0;}
+.mvf-btns{display:flex;gap:14px;justify-content:center;margin:20px 0;}
+.mvf-btns button{padding:13px 36px;border-radius:12px;border:none;font-weight:700;font-size:.95rem;cursor:pointer;transition:all .2s ease;font-family:'Inter',sans-serif;}
+.mvf-myth{background:rgba(244,63,94,0.1);color:var(--rose);border:2px solid rgba(244,63,94,0.2);}
+.mvf-myth:hover{background:rgba(244,63,94,0.2);transform:translateY(-2px);}
+.mvf-fact{background:rgba(16,185,129,0.1);color:var(--emerald);border:2px solid rgba(16,185,129,0.2);}
+.mvf-fact:hover{background:rgba(16,185,129,0.2);transform:translateY(-2px);}
+.mvf-answer{display:none;margin-top:16px;padding:18px;border-radius:14px;font-size:.92rem;line-height:1.6;}
+
+/* NEW: PLEDGE WALL */
+.pledge-input{display:flex;gap:12px;margin-bottom:16px;}
+.pledge-input input{flex:1;padding:13px 16px;border-radius:12px;border:1.5px solid var(--card-border);font-size:.92rem;background:var(--card);color:var(--text);font-family:'Inter',sans-serif;}
+.pledge-presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.pledge-preset{padding:8px 16px;border-radius:20px;border:1.5px solid var(--card-border);background:var(--card);cursor:pointer;font-size:.82rem;font-weight:500;transition:all .2s ease;font-family:'Inter',sans-serif;color:var(--text);}
+.pledge-preset:hover{border-color:var(--blue);color:var(--blue);background:var(--lblue);}
+.pledge-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;max-height:360px;overflow-y:auto;padding:4px;}
+.pledge-card{padding:18px;border-radius:14px;background:linear-gradient(135deg,var(--lblue),var(--lviolet));border:1px solid var(--card-border);animation:fadeIn .5s ease;font-size:.88rem;line-height:1.5;}
+.pledge-card .pledge-date{font-size:.75rem;color:var(--sub);margin-top:8px;}
+
+/* NEW: CERTIFICATE */
+.cert-container{display:none;margin-top:30px;}
+.certificate{background:#fff;border:3px solid var(--navy);border-radius:8px;padding:50px 40px;text-align:center;position:relative;color:#1e293b;}
+.certificate::before{content:'';position:absolute;inset:8px;border:2px solid rgba(139,92,246,0.3);border-radius:4px;}
+.cert-logo{font-size:2.4rem;margin-bottom:10px;}
+.cert-title{font-family:'Poppins',sans-serif;font-size:1.8rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px;}
+.cert-subtitle{font-size:.9rem;color:#64748b;margin-bottom:24px;}
+.cert-name{font-family:'Poppins',sans-serif;font-size:2rem;font-weight:700;color:var(--navy);border-bottom:2px solid var(--violet);display:inline-block;padding-bottom:4px;margin-bottom:12px;}
+.cert-body{font-size:.95rem;color:#475569;line-height:1.8;max-width:500px;margin:0 auto 20px;}
+.cert-score{font-family:'Poppins',sans-serif;font-size:1.3rem;font-weight:700;color:var(--blue);}
+.cert-footer{font-size:.82rem;color:#94a3b8;margin-top:20px;}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:20px;}
+
+/* EMOJI POLL */
+.emoji-poll{display:flex;flex-direction:column;gap:10px;margin:20px 0;}
+.emoji-opts{display:flex;gap:10px;justify-content:center;}
+.emoji-opt{font-size:1.8rem;cursor:pointer;transition:transform .2s ease;padding:8px;border-radius:10px;border:2px solid transparent;}
+.emoji-opt:hover{transform:scale(1.2);}
+.emoji-opt.selected{border-color:var(--blue);background:var(--lblue);}
+.poll-bars{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+.poll-bar{display:flex;align-items:center;gap:10px;font-size:.82rem;}
+.poll-bar-fill{height:8px;border-radius:4px;background:var(--grad);transition:width .5s ease;}
+
+/* KEYBOARD SHORTCUTS MODAL */
+.kb-modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.kb-modal.open{display:flex;}
+.kb-modal-content{background:var(--card);border-radius:20px;padding:36px;max-width:440px;width:90%;box-shadow:var(--shadow-lg);border:1px solid var(--card-border);}
+.kb-shortcut{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--card-border);font-size:.9rem;}
+.kb-key{background:var(--bg);padding:4px 12px;border-radius:6px;font-family:monospace;font-weight:600;font-size:.85rem;border:1px solid var(--card-border);}
+
+/* CHECKLIST */
+.chk-item{display:flex;align-items:center;gap:12px;font-size:.92rem;padding:12px 0;border-bottom:1px solid var(--card-border);cursor:pointer;transition:background .2s ease;}
+.chk-item:hover{background:var(--lblue);margin:0 -8px;padding:12px 8px;border-radius:8px;}
+.chk-item input[type=checkbox]{width:18px;height:18px;accent-color:var(--blue);}
+
+/* CONFETTI CANVAS */
+.confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:9998;}
+
+/* PRIVACY AUDIT */
+.audit-platforms{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
+.audit-platform{padding:20px;border-radius:16px;background:var(--card);border:1px solid var(--card-border);cursor:pointer;transition:all .3s ease;text-align:center;}
+.audit-platform:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.audit-platform.active{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,0.15);}
+.audit-platform .platform-icon{font-size:2rem;margin-bottom:8px;}
+.audit-platform .platform-name{font-weight:600;font-size:.9rem;}
+.audit-checklist{margin-top:24px;display:none;}
+.audit-checklist.active{display:block;}
+.audit-progress{margin-top:16px;text-align:center;}
+.audit-progress-bar{height:8px;border-radius:8px;background:var(--bg);overflow:hidden;margin:10px 0;}
+.audit-progress-fill{height:100%;background:var(--grad);transition:width .4s ease;}
+
+/* CYBERBULLYING */
+.cb-tree{min-height:250px;}
+.cb-node{padding:24px;border-radius:16px;background:var(--bg);border:1px solid var(--card-border);text-align:center;animation:fadeIn .4s ease;}
+.cb-node h4{margin-bottom:16px;color:var(--navy);font-size:1.05rem;}
+body.dark .cb-node h4{color:#e2e8f0;}
+.cb-options{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.cb-opt{padding:13px 18px;border-radius:12px;border:1.5px solid var(--card-border);background:var(--card);cursor:pointer;font-size:.9rem;transition:all .2s ease;text-align:left;font-family:'Inter',sans-serif;color:var(--text);}
+.cb-opt:hover{border-color:var(--blue);background:var(--lblue);}
+.cb-result{padding:20px;border-radius:14px;background:linear-gradient(135deg,var(--lblue),var(--lviolet));border:1px solid var(--card-border);margin-top:16px;animation:fadeIn .4s ease;}
+.cb-helplines{margin-top:20px;padding:20px;border-radius:14px;background:var(--navy);color:#fff;}
+.cb-helplines h4{margin-bottom:12px;}
+.cb-helplines p{font-size:.88rem;color:rgba(255,255,255,0.7);margin-bottom:6px;}
+
+/* Sim Scenario */
+.sim-scenario{display:none;} .sim-scenario.active{display:block;}
+
+/* Misc */
+img,svg{max-width:100%;}
+::selection{background:rgba(139,92,246,0.2);}
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--muted);border-radius:4px;}
+::-webkit-scrollbar-thumb:hover{background:var(--sub);}
+</style>
+</head>
+<body>
+
+<!-- Page Loader -->
+<div class="page-loader" id="pageLoader"><div class="loader-spinner"></div></div>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Confetti Canvas -->
+<canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+
+<!-- Keyboard Shortcuts Modal -->
+<div class="kb-modal" id="kbModal">
+  <div class="kb-modal-content">
+    <h3 style="margin-bottom:20px;">⌨️ Keyboard Shortcuts</h3>
+    <div class="kb-shortcut"><span>Toggle Dark Mode</span><span class="kb-key">D</span></div>
+    <div class="kb-shortcut"><span>Next Safety Tip</span><span class="kb-key">T</span></div>
+    <div class="kb-shortcut"><span>Go to Quiz</span><span class="kb-key">Q</span></div>
+    <div class="kb-shortcut"><span>Back to Top</span><span class="kb-key">Home</span></div>
+    <div class="kb-shortcut"><span>Show Shortcuts</span><span class="kb-key">?</span></div>
+    <div class="kb-shortcut" style="border:none;"><span>Close Modal</span><span class="kb-key">Esc</span></div>
+    <button class="btn btn-primary btn-sm" style="width:100%;margin-top:20px;" onclick="document.getElementById('kbModal').classList.remove('open')">Close</button>
+  </div>
+</div>
+
+<header id="mainHeader">
+<nav>
+  <div class="logo"><div class="logo-icon">🛡</div>Think <span>Before</span> You Share</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#awareness">Awareness</a></li>
+    <li><a href="#safety">Safety</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#survey">Survey</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#project">Project</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
+    <a href="#analyzer" class="btn btn-primary btn-sm">Check a Post</a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow glow-1"></div>
+  <div class="hero-glow glow-2"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Community Service Project · Awareness Initiative</span>
+      <h1>Think <em>Before</em> You Share</h1>
+      <p class="sub-title">Pause. Verify. Protect. Share Responsibly.</p>
+      <p class="hero-desc">Social media connects and informs us — but responsible use matters. Learn to spot fake news, guard your privacy, and make safer choices online.</p>
+      <div class="hero-actions">
+        <a href="#analyzer" class="btn btn-primary">🔍 Check a Post</a>
+        <a href="#quiz" class="btn btn-ghost" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2);">📝 Take Quiz</a>
+        <a href="#tools" class="btn btn-ghost" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.2);">🛠 Safety Tools</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-chip chip1"><div class="chip-ic ic-blue">🛡</div>Privacy Protected</div>
+      <div class="hero-chip chip2"><div class="chip-ic ic-violet">✔</div>Info Verified</div>
+      <div class="hero-chip chip3"><div class="chip-ic ic-navy">📱</div>Used Responsibly</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section" style="padding:50px 0;">
+  <div class="wrap">
+    <div class="stat-grid">
+      <div class="stat-card reveal"><div class="stat-icon">🌍</div><div class="stat-num" data-target="4.9" data-suffix="B">0</div><div class="stat-label">Social Media Users</div></div>
+      <div class="stat-card reveal"><div class="stat-icon">⏱</div><div class="stat-num" data-target="2.5" data-suffix="hrs">0</div><div class="stat-label">Avg Daily Usage</div></div>
+      <div class="stat-card reveal"><div class="stat-icon">📰</div><div class="stat-num" data-target="500" data-suffix="K+">0</div><div class="stat-label">Fake News Daily</div></div>
+      <div class="stat-card reveal"><div class="stat-icon">😢</div><div class="stat-num" data-target="70" data-suffix="%">0</div><div class="stat-label">Teens Cyberbullied</div></div>
+      <div class="stat-card reveal"><div class="stat-icon">🔓</div><div class="stat-num" data-target="33" data-suffix="%">0</div><div class="stat-label">Skip Privacy Settings</div></div>
+      <div class="stat-card reveal"><div class="stat-icon">⚡</div><div class="stat-num" data-target="8" data-suffix="sec">0</div><div class="stat-label">Attention Span</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARENESS -->
+<section id="awareness">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Why Social Media <span class="grad-text">Awareness</span> Matters</h2><p>Four things every user should understand before they scroll, post or forward.</p></div>
+    <div class="card-grid">
+      <div class="card reveal"><div class="ico">📰</div><h4>Fake News</h4><p>Not everything shared online is true. Learn to verify before believing or sharing.</p></div>
+      <div class="card reveal"><div class="ico">🔐</div><h4>Privacy</h4><p>Protect your personal information, photographs, passwords and location.</p></div>
+      <div class="card reveal"><div class="ico">🛡</div><h4>Cyber Safety</h4><p>Recognize suspicious accounts, links, scams and harmful online behaviour.</p></div>
+      <div class="card reveal"><div class="ico">⚖️</div><h4>Digital Responsibility</h4><p>Think before posting, commenting or forwarding information.</p></div>
+    </div>
+    <!-- Emoji Poll -->
+    <div class="quiz-box reveal" style="margin-top:40px;">
+      <p style="text-align:center;font-weight:600;margin-bottom:12px;">How concerned are you about online privacy?</p>
+      <div class="emoji-opts" id="privacyPoll">
+        <span class="emoji-opt" onclick="votePoll('privacy',0)">😟</span>
+        <span class="emoji-opt" onclick="votePoll('privacy',1)">😐</span>
+        <span class="emoji-opt" onclick="votePoll('privacy',2)">🙂</span>
+        <span class="emoji-opt" onclick="votePoll('privacy',3)">😄</span>
+      </div>
+      <div class="poll-bars" id="privacyPollBars"></div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS VS RISKS -->
+<section class="section-alt">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Understanding <span class="grad-text">Social Media</span></h2><p>Every platform carries both opportunity and risk — knowing both is the first step.</p></div>
+    <div class="two-col">
+      <div class="panel good reveal-left">
+        <h3>✅ Benefits</h3>
+        <ul>
+          <li>Education & learning opportunities</li><li>Communication with others</li>
+          <li>Knowledge sharing</li><li>Career opportunities</li>
+          <li>Community awareness</li><li>Creativity & expression</li>
+        </ul>
+      </div>
+      <div class="panel bad reveal-right">
+        <h3>❌ Risks</h3>
+        <ul>
+          <li>Fake news & misinformation</li><li>Cyberbullying</li>
+          <li>Privacy problems</li><li>Online scams</li>
+          <li>Excessive usage</li><li>Emotional impact</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY STEPS -->
+<section id="safety">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Stop. Check. <span class="grad-text">Verify.</span></h2><p>A simple six-step process to verify anything before you trust or share it.</p></div>
+    <div class="steps">
+      <div class="step reveal"><div class="num">1</div><p>Check the source</p></div>
+      <div class="step reveal"><div class="num">2</div><p>Check the date</p></div>
+      <div class="step reveal"><div class="num">3</div><p>Read fully</p></div>
+      <div class="step reveal"><div class="num">4</div><p>Compare sources</p></div>
+      <div class="step reveal"><div class="num">5</div><p>Check images/videos</p></div>
+      <div class="step reveal"><div class="num">6</div><p>Think before sharing</p></div>
+    </div>
+    <div class="spot-card reveal">
+      <div class="tag">Fictional Example — for practice only</div>
+      <div class="post">"BREAKING: Scientists confirm phones fully charge in 5 minutes using this one trick banks don't want you to know!! Share before it's deleted!!"</div>
+      <div class="spot-actions">
+        <button class="b-real" onclick="spotAnswer(false)">Looks Real</button>
+        <button class="b-susp" onclick="spotAnswer(true)">Looks Suspicious</button>
+      </div>
+      <div class="spot-result" id="spotResult"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTECT YOURSELF -->
+<section class="section-alt">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Protect <span class="grad-text">Yourself</span> Online</h2><p>Practical habits that keep your accounts and identity safe.</p></div>
+    <div class="card-grid">
+      <div class="card reveal"><div class="ico">🔑</div><h4>Password Safety</h4><p>Use strong, unique passwords. Never share them or reuse across sites.</p></div>
+      <div class="card reveal"><div class="ico">👁</div><h4>Privacy</h4><p>Check privacy settings and be careful with location and personal info.</p></div>
+      <div class="card reveal"><div class="ico">🚫</div><h4>Scam Awareness</h4><p>Avoid suspicious links, never share OTPs, verify unknown requests.</p></div>
+      <div class="card reveal"><div class="ico">👤</div><h4>Fake Accounts</h4><p>Check profile details and be cautious with unknown or new accounts.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- THINK BEFORE YOU SHARE -->
+<section>
+  <div class="wrap">
+    <div class="think reveal">
+      <h2>Before You Share, Ask Yourself…</h2>
+      <div class="check-grid">
+        <div class="check-item">✓ Is this information true?</div>
+        <div class="check-item">✓ Who created it?</div>
+        <div class="check-item">✓ Is the source reliable?</div>
+        <div class="check-item">✓ Is it recent?</div>
+        <div class="check-item">✓ Could this hurt someone?</div>
+        <div class="check-item">✓ Am I protecting privacy?</div>
+        <div class="check-item">✓ Is sharing necessary?</div>
+      </div>
+      <div class="tagline">Pause. Verify. Think. Then Share.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DO'S AND DON'TS -->
+<section class="section-alt">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Be a Responsible <span class="grad-text">Digital Citizen</span></h2></div>
+    <div class="two-col">
+      <div class="panel good reveal-left"><h3>✅ Do</h3><ul>
+        <li>Verify information</li><li>Respect others</li><li>Protect privacy</li>
+        <li>Use strong passwords</li><li>Report harmful content</li><li>Maintain healthy screen time</li>
+      </ul></div>
+      <div class="panel bad reveal-right"><h3>❌ Don't</h3><ul>
+        <li>Spread rumours</li><li>Share private information</li>
+        <li>Trust every forwarded message</li><li>Click suspicious links</li>
+        <li>Cyberbully</li><li>Spend excessive time online</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- SMART POST ANALYZER -->
+<section id="analyzer">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Smart Post <span class="grad-text">Analyzer</span></h2><p>Paste any post, headline or message to see an educational awareness analysis.</p></div>
+    <div class="quiz-box analyzer-box reveal">
+      <textarea id="analyzerInput" placeholder="Paste a post, headline or message here...">SHARE NOW!! URGENT!! Everyone must forward this immediately before it gets deleted!!!</textarea>
+      <input id="analyzerSource" placeholder="Source name (optional)" style="width:100%;margin-top:12px;padding:13px 16px;border-radius:12px;border:1.5px solid var(--card-border);background:var(--card);color:var(--text);font-family:'Inter',sans-serif;">
+      <button class="btn btn-primary" style="margin-top:16px;" onclick="analyzePost()">🔍 Run Analysis</button>
+      <div id="analyzerResult" style="display:none;margin-top:22px;">
+        <div id="riskBadge" class="risk-badge"></div>
+        <p style="font-size:.88rem;color:var(--sub);margin-bottom:12px;">Indicator Score: <strong id="riskScore"></strong>/9</p>
+        <ul class="indicator-list" id="indicatorList"></ul>
+        <p style="margin-top:16px;font-size:.82rem;color:var(--sub);font-style:italic;">This is an educational awareness tool, not a fact-checking authority.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE SIMULATOR -->
+<section class="section-alt" id="fakenews2">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Interactive <span class="grad-text">Scenario Simulator</span></h2><p>Fictional scenarios. Pick a response and see why it's safer or riskier.</p></div>
+    <div class="quiz-box reveal"><div id="simArea"></div></div>
+  </div>
+</section>
+
+<!-- ============ NEW FEATURES ============ -->
+
+<!-- TOOLS SECTION ANCHOR -->
+<section id="tools" style="padding:0;"></section>
+
+<!-- PASSWORD STRENGTH CHECKER -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal"><h2>🔑 Password <span class="grad-text">Strength</span> Checker</h2><p>Type a password below and see how strong it is in real time.</p></div>
+    <div class="quiz-box reveal">
+      <div class="pwd-input">
+        <input type="password" id="pwdInput" placeholder="Type a test password..." oninput="checkPwd()">
+        <button class="pwd-toggle" onclick="togglePwd()">👁</button>
+      </div>
+      <div class="pwd-meter"><div class="pwd-meter-fill" id="pwdMeter"></div></div>
+      <p style="text-align:center;font-weight:600;margin-bottom:16px;" id="pwdLabel">Enter a password to test</p>
+      <div class="pwd-criteria" id="pwdCriteria">
+        <div class="pwd-crit" id="pc-len"><div class="crit-icon">✕</div>At least 8 characters</div>
+        <div class="pwd-crit" id="pc-upper"><div class="crit-icon">✕</div>Uppercase letter</div>
+        <div class="pwd-crit" id="pc-lower"><div class="crit-icon">✕</div>Lowercase letter</div>
+        <div class="pwd-crit" id="pc-num"><div class="crit-icon">✕</div>Contains number</div>
+        <div class="pwd-crit" id="pc-special"><div class="crit-icon">✕</div>Special character</div>
+        <div class="pwd-crit" id="pc-long"><div class="crit-icon">✕</div>12+ characters (strong)</div>
+      </div>
+      <p style="font-size:.82rem;color:var(--sub);margin-top:18px;text-align:center;font-style:italic;">💡 Tip: Never use real passwords here. This is for educational demonstration only.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHISHING LINK DETECTOR -->
+<section class="section-alt">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>🎣 Phishing Link <span class="grad-text">Detector</span></h2><p>Paste a URL to check for common phishing red flags.</p></div>
+    <div class="quiz-box reveal">
+      <div class="url-input">
+        <input type="text" id="phishInput" placeholder="Paste a URL to check... (e.g., faceb00k.com/login)">
+        <button class="btn btn-primary btn-sm" onclick="checkPhish()">Scan</button>
+      </div>
+      <div class="phish-result" id="phishResult">
+        <div id="phishBadge" class="risk-badge"></div>
+        <div class="phish-flags" id="phishFlags"></div>
+        <p style="font-size:.82rem;color:var(--sub);margin-top:14px;font-style:italic;">Educational tool — always verify with your browser's security indicators.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIGITAL FOOTPRINT -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal"><h2>👣 Digital <span class="grad-text">Footprint</span> Calculator</h2><p>Answer a few questions to estimate your online presence size.</p></div>
+    <div class="quiz-box reveal">
+      <div class="fp-questions">
+        <div class="fp-q"><label>How many social media accounts do you have?</label>
+          <select id="fp-accounts"><option value="1">1-2</option><option value="2">3-4</option><option value="3">5-6</option><option value="4">7+</option></select></div>
+        <div class="fp-q"><label>How often do you post?</label>
+          <select id="fp-posting"><option value="1">Rarely</option><option value="2">Weekly</option><option value="3">Daily</option><option value="4">Multiple times/day</option></select></div>
+        <div class="fp-q"><label>Do you use public profiles?</label>
+          <select id="fp-public"><option value="1">All private</option><option value="2">Some public</option><option value="3">Most public</option><option value="4">All public</option></select></div>
+        <div class="fp-q"><label>Do you share your location?</label>
+          <select id="fp-location"><option value="1">Never</option><option value="2">Rarely</option><option value="3">Sometimes</option><option value="4">Always</option></select></div>
+        <div class="fp-q"><label>Do you read privacy policies?</label>
+          <select id="fp-privacy"><option value="1">Always</option><option value="2">Sometimes</option><option value="3">Rarely</option><option value="4">Never</option></select></div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:20px;" onclick="calcFootprint()">Calculate My Footprint</button>
+      <div class="fp-result" id="fpResult">
+        <div class="fp-visual" id="fpVisual">👣</div>
+        <h3 id="fpTitle" style="margin-bottom:8px;"></h3>
+        <p id="fpDesc" style="color:var(--sub);font-size:.92rem;max-width:400px;margin:0 auto;"></p>
+        <div id="fpTips" style="margin-top:20px;text-align:left;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN TIME CALCULATOR -->
+<section class="section-alt">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>⏱ Screen Time <span class="grad-text">Calculator</span></h2><p>Enter your daily usage per platform to see the bigger picture.</p></div>
+    <div class="quiz-box reveal">
+      <div class="st-inputs">
+        <div class="st-item"><span style="font-size:1.2rem;">📱</span><label>Instagram</label><input type="number" id="st-ig" min="0" max="24" value="0" step="0.5"> hrs</div>
+        <div class="st-item"><span style="font-size:1.2rem;">💬</span><label>WhatsApp</label><input type="number" id="st-wa" min="0" max="24" value="0" step="0.5"> hrs</div>
+        <div class="st-item"><span style="font-size:1.2rem;">▶️</span><label>YouTube</label><input type="number" id="st-yt" min="0" max="24" value="0" step="0.5"> hrs</div>
+        <div class="st-item"><span style="font-size:1.2rem;">🎵</span><label>TikTok/Reels</label><input type="number" id="st-tt" min="0" max="24" value="0" step="0.5"> hrs</div>
+        <div class="st-item"><span style="font-size:1.2rem;">🐦</span><label>Twitter/X</label><input type="number" id="st-tw" min="0" max="24" value="0" step="0.5"> hrs</div>
+        <div class="st-item"><span style="font-size:1.2rem;">🎮</span><label>Gaming</label><input type="number" id="st-gm" min="0" max="24" value="0" step="0.5"> hrs</div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:20px;" onclick="calcScreenTime()">Calculate</button>
+      <div class="st-result" id="stResult">
+        <h3 style="text-align:center;margin-bottom:4px;">Your Screen Time Summary</h3>
+        <p id="stSummary" style="text-align:center;color:var(--sub);font-size:.92rem;"></p>
+        <div class="st-comparison" id="stComparison"></div>
+        <p style="text-align:center;font-size:.85rem;color:var(--sub);margin-top:18px;font-style:italic;">💡 Recommended: No more than 2 hours of recreational screen time per day for teens.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MYTH VS FACT -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal"><h2>🎮 Myth vs <span class="grad-text">Fact</span></h2><p>Test your knowledge — is it a myth or a fact?</p></div>
+    <div class="quiz-box reveal mvf-card">
+      <p style="font-size:.85rem;color:var(--sub);margin-bottom:6px;">Question <span id="mvfIdx">1</span> of <span id="mvfTotal">8</span> • Score: <span id="mvfScore">0</span></p>
+      <div class="progress-bar"><div class="progress-fill" id="mvfProgress"></div></div>
+      <div class="mvf-statement" id="mvfStatement"></div>
+      <div class="mvf-btns" id="mvfBtns">
+        <button class="mvf-myth" onclick="mvfAnswer('myth')">❌ Myth</button>
+        <button class="mvf-fact" onclick="mvfAnswer('fact')">✅ Fact</button>
+      </div>
+      <div class="mvf-answer" id="mvfAnswer"></div>
+      <div id="mvfEnd" style="display:none;text-align:center;padding:20px;">
+        <div style="font-size:3rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;" id="mvfFinalScore"></div>
+        <p style="font-weight:600;margin:8px 0;" id="mvfFinalLabel"></p>
+        <button class="btn btn-primary btn-sm" onclick="startMvf()">Play Again</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY AUDIT -->
+<section class="section-alt">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>🔒 Social Media <span class="grad-text">Privacy Audit</span></h2><p>Check your privacy settings platform by platform.</p></div>
+    <div class="quiz-box reveal" style="max-width:800px;">
+      <div class="audit-platforms" id="auditPlatforms"></div>
+      <div class="audit-checklist" id="auditChecklist"></div>
+      <div class="audit-progress" id="auditProgress" style="display:none;">
+        <p style="font-weight:600;">Overall Privacy Score: <span id="auditScoreText" class="grad-text">0%</span></p>
+        <div class="audit-progress-bar"><div class="audit-progress-fill" id="auditBar" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CYBERBULLYING GUIDE -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal"><h2>🛡 Cyberbullying <span class="grad-text">Response Guide</span></h2><p>What should you do if you face cyberbullying? Navigate the decision tree below.</p></div>
+    <div class="quiz-box reveal">
+      <div class="cb-tree" id="cbTree"></div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:16px;" onclick="startCbTree()">🔄 Restart Guide</button>
+      <div class="cb-helplines">
+        <h4>📞 Helpline Information</h4>
+        <p>🇮🇳 Childline India: <strong>1098</strong></p>
+        <p>🇮🇳 Cyber Crime Helpline: <strong>1930</strong></p>
+        <p>📧 Report at: <strong>cybercrime.gov.in</strong></p>
+        <p style="margin-top:8px;color:rgba(255,255,255,0.5);font-size:.82rem;">Always tell a trusted adult — you don't have to face it alone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AM I SAFE ONLINE? -->
+<section class="section-alt" id="checklist">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Am I <span class="grad-text">Safe</span> Online?</h2><p>Check what already applies to you, then see your safety snapshot.</p></div>
+    <div class="quiz-box reveal">
+      <div id="chkList"></div>
+      <button class="btn btn-primary" style="margin-top:18px;" onclick="checkSafety()">Check My Safety</button>
+      <p id="chkResult" style="margin-top:16px;font-weight:600;color:var(--navy);display:none;"></p>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Test Your <span class="grad-text">Awareness</span></h2><p>10 quick questions with a 15-second timer — see how aware you really are.</p></div>
+    <div class="quiz-box reveal">
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div id="quizArea"></div>
+      <div class="quiz-result" id="quizResult">
+        <div class="score" id="scoreText"></div>
+        <p id="scoreLabel" style="font-weight:600;color:var(--navy);margin-top:8px;"></p>
+        <p style="color:var(--sub);margin-top:12px;font-size:.9rem;">Review answers above for explanations.</p>
+        <button class="btn btn-primary" style="margin-top:22px;" onclick="startQuiz()">🔄 Retake Quiz</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="section-alt" id="dashboard">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>My Awareness <span class="grad-text">Dashboard</span></h2><p>Tracks this session locally — not shared with anyone.</p></div>
+    <div class="dash-grid reveal" style="margin-bottom:40px;">
+      <div class="card dash-card"><div class="ring" id="ringQuiz" style="--p:0;"><span>0%</span></div><div><h4>Quiz Score</h4><p style="font-size:.85rem;color:var(--sub);">Complete the quiz</p></div></div>
+      <div class="card dash-card"><div class="ring" id="ringSafety" style="--p:0;"><span>0%</span></div><div><h4>Safety Checklist</h4><p style="font-size:.85rem;color:var(--sub);">Complete the checklist</p></div></div>
+    </div>
+    <div class="badge-grid reveal">
+      <div class="badge" id="badge-privacy"><div class="bi">🛡</div><p>Privacy Protector</p></div>
+      <div class="badge" id="badge-fact"><div class="bi">🔎</div><p>Fact Checker</p></div>
+      <div class="badge" id="badge-smart"><div class="bi">🧠</div><p>Smart Thinker</p></div>
+      <div class="badge" id="badge-responsible"><div class="bi">📱</div><p>Responsible User</p></div>
+      <div class="badge" id="badge-citizen"><div class="bi">🌐</div><p>Digital Citizen</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLEDGE WALL -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal"><h2>✍️ Awareness <span class="grad-text">Pledge Wall</span></h2><p>Make a pledge and join others in committing to responsible social media use.</p></div>
+    <div class="quiz-box reveal" style="max-width:800px;">
+      <div class="pledge-input">
+        <input type="text" id="pledgeInput" placeholder="Write your pledge..." maxlength="150">
+        <button class="btn btn-primary btn-sm" onclick="submitPledge()">Pledge</button>
+      </div>
+      <p style="font-size:.82rem;color:var(--sub);margin-bottom:10px;">Or choose a preset:</p>
+      <div class="pledge-presets">
+        <button class="pledge-preset" onclick="quickPledge(this)">I pledge to verify before sharing</button>
+        <button class="pledge-preset" onclick="quickPledge(this)">I will protect my privacy online</button>
+        <button class="pledge-preset" onclick="quickPledge(this)">I will stand against cyberbullying</button>
+        <button class="pledge-preset" onclick="quickPledge(this)">I will think before I post</button>
+        <button class="pledge-preset" onclick="quickPledge(this)">I will report fake news</button>
+      </div>
+      <div class="pledge-wall" id="pledgeWall"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATE -->
+<section class="section-alt" id="certSection">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>🏆 Awareness <span class="grad-text">Certificate</span></h2><p>Complete the quiz and safety checklist to earn your certificate.</p></div>
+    <div class="quiz-box reveal" style="max-width:700px;">
+      <input type="text" id="certName" placeholder="Enter your full name" style="width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid var(--card-border);font-size:1rem;margin-bottom:14px;background:var(--card);color:var(--text);font-family:'Inter',sans-serif;">
+      <button class="btn btn-primary" onclick="generateCert()">Generate Certificate</button>
+      <div class="cert-container" id="certContainer">
+        <div class="certificate" id="certificate">
+          <div class="cert-logo">🏆</div>
+          <div class="cert-title">Certificate of Achievement</div>
+          <div class="cert-subtitle">Social Media Awareness Program</div>
+          <div class="cert-name" id="certNameDisplay"></div>
+          <div class="cert-body">has successfully completed the Social Media Awareness program and demonstrated knowledge in digital safety, fake news identification, privacy protection, and responsible online behavior.</div>
+          <div class="cert-score" id="certScoreDisplay"></div>
+          <div class="cert-footer">
+            <p>Sir C R Reddy College of Engineering (Autonomous)</p>
+            <p>Department of Information Technology</p>
+            <p id="certDate"></p>
+          </div>
+        </div>
+        <div class="cert-actions">
+          <button class="btn btn-primary btn-sm" onclick="window.print()">🖨 Print Certificate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SURVEY -->
+<section id="survey">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>📋 Awareness <span class="grad-text">Survey</span></h2><p>Part of our CSP data collection. This demo form validates fields client-side.</p></div>
+    <form class="quiz-box survey-form reveal" style="max-width:580px;" id="surveyForm" onsubmit="return submitSurvey(event)">
+      <div style="display:grid;gap:16px;">
+        <input required placeholder="Full Name">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <input required type="number" min="10" max="20" placeholder="Age">
+          <input required placeholder="Class">
+        </div>
+        <input required placeholder="School">
+        <div><p style="font-size:.92rem;font-weight:600;color:var(--navy);margin-bottom:10px;">Have you heard the term "fake news"?</p>
+          <label style="font-size:.9rem;"><input type="radio" name="fn" required value="yes"> Yes</label>
+          <label style="font-size:.9rem;margin-left:18px;"><input type="radio" name="fn" value="no"> No</label>
+        </div>
+        <div><p style="font-size:.92rem;font-weight:600;color:var(--navy);margin-bottom:10px;">Do you check the source before sharing?</p>
+          <select required><option value="">Select</option><option>Always</option><option>Sometimes</option><option>Never</option></select>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit Survey</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="section-alt" id="resources">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Awareness <span class="grad-text">Resources</span></h2></div>
+    <div class="search-bar"><input id="topicSearch" placeholder="Search topics: privacy, scams, passwords..." oninput="filterResources()"></div>
+    <p id="noResults" style="display:none;text-align:center;color:var(--sub);margin-bottom:20px;">No results found. Try another topic.</p>
+    <div class="card-grid" id="resGrid">
+      <div class="res-card reveal" data-topic="fake news verification"><div class="ico" style="width:42px;height:42px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;">📋</div><h4 style="color:var(--navy);margin-bottom:8px;">Fake News Checklist</h4><p style="font-size:.88rem;color:var(--sub);margin-bottom:14px;">A quick 6-point check before you trust a post.</p><a href="#safety">Learn More →</a></div>
+      <div class="res-card reveal" data-topic="privacy location password"><div class="ico" style="width:42px;height:42px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;">🔒</div><h4 style="color:var(--navy);margin-bottom:8px;">Privacy Checklist</h4><p style="font-size:.88rem;color:var(--sub);margin-bottom:14px;">Lock down your accounts in ten minutes.</p><a href="#safety">Learn More →</a></div>
+      <div class="res-card reveal" data-topic="cyber safety scams passwords cyberbullying"><div class="ico" style="width:42px;height:42px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;">🛡</div><h4 style="color:var(--navy);margin-bottom:8px;">Online Safety Tips</h4><p style="font-size:.88rem;color:var(--sub);margin-bottom:14px;">Everyday habits that keep you safe.</p><a href="#safety">Learn More →</a></div>
+      <div class="res-card reveal" data-topic="responsible sharing digital citizenship"><div class="ico" style="width:42px;height:42px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px;">💬</div><h4 style="color:var(--navy);margin-bottom:8px;">Responsible Guide</h4><p style="font-size:.88rem;color:var(--sub);margin-bottom:14px;">How to post, comment and share well.</p><a href="#awareness">Learn More →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- DAILY TIP -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Today's <span class="grad-text">Safety Tip</span></h2></div>
+    <div class="tip-card reveal">
+      <div class="tip-icon">💡</div>
+      <p id="tipText">Never share your OTP or password with anyone.</p>
+      <button class="btn btn-primary btn-sm" onclick="nextTip()" style="margin-top:18px;">Next Tip →</button>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGENCY -->
+<section class="section-alt" id="emergency">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>If Something Goes <span class="grad-text">Wrong</span> Online</h2><p>General educational guidance — not a substitute for professional or legal help.</p></div>
+    <div class="card-grid">
+      <div class="card reveal"><div class="ico">🚫</div><h4>Don't Respond</h4><p>Do not respond to threatening or harmful messages.</p></div>
+      <div class="card reveal"><div class="ico">📸</div><h4>Preserve Evidence</h4><p>Screenshot relevant messages before blocking or reporting.</p></div>
+      <div class="card reveal"><div class="ico">🔇</div><h4>Block & Report</h4><p>Use the platform's block/report tools when appropriate.</p></div>
+      <div class="card reveal"><div class="ico">🧑‍🏫</div><h4>Tell a Trusted Adult</h4><p>Talk to a parent, teacher, guardian or appropriate authority.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT -->
+<section id="project">
+  <div class="wrap">
+    <div class="section-head reveal"><h2>Our Community <span class="grad-text">Service Project</span></h2><p>To create awareness about safe, responsible and positive social media usage.</p></div>
+    <div class="info-grid reveal">
+      <div class="info-item"><div class="lbl">Project</div><div class="val">Social Media Awareness</div></div>
+      <div class="info-item"><div class="lbl">Institution</div><div class="val">Sir C R Reddy College of Engineering (Autonomous)</div></div>
+      <div class="info-item"><div class="lbl">Department</div><div class="val">Information Technology</div></div>
+      <div class="info-item"><div class="lbl">Target Group</div><div class="val">10th Class Students</div></div>
+    </div>
+    <div class="tl reveal">
+      <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">Survey</div></div>
+      <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">Problem Identification</div></div>
+      <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">Awareness Preparation</div></div>
+      <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">School Awareness Program</div></div>
+      <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">Student Interaction</div></div>
+      <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">Feedback Collection</div></div>
+      <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot"></div></div><div class="tl-text">Analysis & Conclusion</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div>
+        <h3>Think Before You Share</h3>
+        <p>Social Media Awareness — Community Service Project</p>
+        <p>Sir C R Reddy College of Engineering (Autonomous)<br>Department of Information Technology</p>
+      </div>
+      <ul class="f-links">
+        <li><a href="#home">Home</a></li><li><a href="#awareness">Awareness</a></li>
+        <li><a href="#safety">Safety</a></li><li><a href="#tools">Tools</a></li>
+        <li><a href="#quiz">Quiz</a></li><li><a href="#survey">Survey</a></li>
+        <li><a href="#resources">Resources</a></li><li><a href="#project">Our Project</a></li>
+      </ul>
+    </div>
+    <div class="f-bottom">
+      <p>Verify. Think. Share Responsibly. | Press <span style="background:rgba(255,255,255,0.1);padding:2px 8px;border-radius:4px;font-family:monospace;">?</span> for keyboard shortcuts</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0})" aria-label="Back to top">↑</button>
+
+<script>
+/* ========== PAGE LOADER ========== */
+window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('pageLoader').classList.add('hidden'),600);});
+
+/* ========== HERO PARTICLES ========== */
+(function(){
+  const c=document.getElementById('heroCanvas'),ctx=c.getContext('2d');
+  let w,h,particles=[];
+  function resize(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<60;i++) particles.push({x:Math.random()*2000,y:Math.random()*1000,r:Math.random()*2+1,dx:(Math.random()-.5)*.5,dy:(Math.random()-.5)*.5,o:Math.random()*.4+.1});
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{
+      p.x+=p.dx;p.y+=p.dy;
+      if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(139,92,246,${p.o})`;ctx.fill();
+    });
+    // Draw lines between close particles
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(59,130,246,${.08*(1-dist/120)})`;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ========== BURGER MENU ========== */
+const burgerBtn=document.getElementById('burger');
+const navLinksEl=document.getElementById('navLinks');
+burgerBtn.onclick=()=>{burgerBtn.classList.toggle('open');navLinksEl.classList.toggle('open');};
+document.querySelectorAll('.nav-links a').forEach(a=>a.onclick=()=>{navLinksEl.classList.remove('open');burgerBtn.classList.remove('open');});
+
+/* ========== SCROLL EFFECTS ========== */
+const scrollProg=document.getElementById('scrollProgress');
+const backTopBtn=document.getElementById('backTop');
+const mainHeader=document.getElementById('mainHeader');
+
+window.addEventListener('scroll',()=>{
+  const st=window.scrollY,dh=document.documentElement.scrollHeight-window.innerHeight;
+  scrollProg.style.width=(st/dh*100)+'%';
+  backTopBtn.classList.toggle('visible',st>400);
+  mainHeader.classList.toggle('scrolled',st>50);
+});
+
+/* Active nav highlighting */
+const sections=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('.nav-links a');
+const observer2=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navAs.forEach(a=>a.classList.remove('active'));
+      const active=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if(active) active.classList.add('active');
+    }
+  });
+},{threshold:0.3,rootMargin:'-80px 0px -50% 0px'});
+sections.forEach(s=>observer2.observe(s));
+
+/* ========== SCROLL REVEAL ========== */
+const revealObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target);}});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revealObserver.observe(el));
+
+/* ========== ANIMATED COUNTERS ========== */
+const counterObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target;
+      const target=parseFloat(el.dataset.target);
+      const suffix=el.dataset.suffix||'';
+      const isFloat=target%1!==0;
+      let current=0;
+      const step=target/60;
+      const timer=setInterval(()=>{
+        current+=step;
+        if(current>=target){current=target;clearInterval(timer);}
+        el.textContent=(isFloat?current.toFixed(1):Math.floor(current))+suffix;
+      },25);
+      counterObserver.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('.stat-num[data-target]').forEach(el=>counterObserver.observe(el));
+
+/* ========== DARK MODE ========== */
+const themeBtn=document.getElementById('themeToggle');
+function applyTheme(t){document.body.classList.toggle('dark',t==='dark');themeBtn.textContent=t==='dark'?'☀️':'🌙';}
+applyTheme(localStorage.getItem('sma_theme')||'light');
+themeBtn.onclick=()=>{const t=document.body.classList.contains('dark')?'light':'dark';applyTheme(t);localStorage.setItem('sma_theme',t);};
+
+/* ========== TOAST ========== */
+let toastEl;
+function showToast(msg){
+  if(!toastEl){toastEl=document.createElement('div');toastEl.className='toast';document.body.appendChild(toastEl);}
+  toastEl.textContent=msg;toastEl.classList.add('show');
+  clearTimeout(toastEl._t);toastEl._t=setTimeout(()=>toastEl.classList.remove('show'),3800);
+}
+const notifs=["Remember: Check the source before sharing.","Tip: Old information can be presented as new.","Never share your OTP or password.","Think before clicking unknown links."];
+let ni=0;setInterval(()=>{showToast(notifs[ni%notifs.length]);ni++;},30000);
+
+/* ========== SPOT ANSWER ========== */
+function spotAnswer(susp){
+  const r=document.getElementById('spotResult');r.style.display='block';
+  r.textContent=susp?"✅ Correct — urgency, exaggerated claims and 'share before deleted' pressure are classic fake-news signals.":"⚠️ Actually suspicious: notice the urgency, vague 'scientists', and pressure to share immediately.";
+}
+
+/* ========== TIPS ========== */
+const tips=["Never share your OTP or password with anyone.","Think twice before posting your location.","Verify a story on two sources before sharing.","Use two-factor authentication where possible.","Don't accept friend requests from strangers.","Check the date on a post before trusting it.","Report, don't engage, with cyberbullying.","Screenshot evidence before blocking a harmful account.","Adjust privacy settings on every new app.","Take regular breaks from your feed.","Your digital footprint is permanent — think before you post.","A strong password has 12+ characters with mixed types."];
+let tipIdx=0;
+function nextTip(){tipIdx=(tipIdx+1)%tips.length;document.getElementById('tipText').textContent=tips[tipIdx];}
+
+/* ========== SMART POST ANALYZER ========== */
+function analyzePost(){
+  const text=document.getElementById('analyzerInput').value;
+  const source=document.getElementById('analyzerSource').value.trim();
+  const flags=[];
+  if(/urgent|immediately|now!!|breaking/i.test(text)) flags.push("⚠️ Contains urgency-based language.");
+  if((text.match(/!/g)||[]).length>=3) flags.push("⚠️ Excessive exclamation / emotional language.");
+  if(/share (this|now)|forward (this|immediately)/i.test(text)) flags.push("⚠️ Directly requests mass sharing/forwarding.");
+  if(!source) flags.push("⚠️ No source provided.");
+  if(/cure|miracle|100%|guaranteed|shocking/i.test(text)) flags.push("⚠️ Suspicious or sensational claims.");
+  if(!/\b(20\d{2}|today|yesterday)\b/i.test(text)) flags.push("⚠️ Unclear or missing date.");
+  if(/\d{2,3}%|\d+x|million|billion/i.test(text)&&!source) flags.push("⚠️ Unverified statistic without source.");
+  const caps=(text.match(/[A-Z]{4,}/g)||[]).length;
+  if(caps>=2) flags.push("⚠️ Excessive capital letters.");
+  if(/you won't believe|shocking truth|what happened next/i.test(text)) flags.push("⚠️ Clickbait-style headline.");
+  const score=flags.length;
+  const badge=document.getElementById('riskBadge');
+  let level,cls;
+  if(score<=1){level="LOW RISK";cls="risk-low";}else if(score<=3){level="NEEDS VERIFICATION";cls="risk-mid";}else{level="HIGH RISK INDICATORS";cls="risk-high";}
+  badge.className="risk-badge "+cls;badge.textContent=level;
+  document.getElementById('riskScore').textContent=score;
+  const checklist=["✅ Check the original source.","✅ Check the publication date.","✅ Compare with another reliable source.","✅ Do not forward until verified."];
+  document.getElementById('indicatorList').innerHTML=(flags.length?flags:["✅ No strong risk indicators detected — still verify independently."]).concat(checklist).map(i=>`<li>${i}</li>`).join('');
+  document.getElementById('analyzerResult').style.display='block';
+  unlockBadge('fact');
+}
+
+/* ========== INTERACTIVE SIMULATOR ========== */
+const scenarios=[
+  {title:"Fake Giveaway",post:"🎉 WIN A FREE iPhone! Just share this post and comment your number! Limited slots!!!",opts:[["Believe","Risky — scams often use fake prizes to collect personal data."],["Check Source","Safer — verify if the brand's official account posted this."],["Search","Safer — a quick search usually reveals known scam patterns."],["Ignore","Safest — no verified giveaway needs your personal info upfront."]]},
+  {title:"Health Misinformation",post:"Doctors don't want you to know this one home remedy cures everything overnight!",opts:[["Believe","Risky — miracle cure claims are a major misinformation red flag."],["Check Source","Safer — look for the claim on a recognized health authority site."],["Search","Safer — cross-check with verified medical sources."],["Ignore","Reasonable — but flagging or reporting helps others too."]]},
+  {title:"Edited Image",post:"Photo 'proof' of an event that looks slightly too dramatic to be real.",opts:[["Believe","Risky — edited images spread fast before being debunked."],["Check Source","Safer — reverse image search can reveal edits or reuse."],["Search","Safer — find the original, unedited version if it exists."],["Ignore","Reasonable if you're unsure, but verifying helps stop the spread."]]},
+  {title:"Old News as New",post:"Shocking event from years ago being shared as if it just happened today.",opts:[["Believe","Risky — outdated news taken out of context misleads people."],["Check Source","Safer — check the publication date on the original article."],["Search","Safer — search the headline to find when it really happened."],["Ignore","Reasonable — but a quick date-check only takes seconds."]]},
+  {title:"Suspicious DM",post:"A stranger DMs you: 'Hey, click this link to claim your reward!'",opts:[["Believe","Risky — unsolicited links are a common phishing tactic."],["Check Source","Safer — check if the account is verified or known to you."],["Search","Safer — search the message text; scams are often reported online."],["Ignore","Safest — never click links from unknown senders."]]}
+];
+let simIdx=0;
+function renderSim(){
+  const s=scenarios[simIdx];
+  document.getElementById('simArea').innerHTML=`<p style="font-size:.82rem;color:var(--sub);margin-bottom:12px;">Scenario ${simIdx+1} of ${scenarios.length} — ${s.title}</p><div class="spot-card" style="margin:0 0 20px;"><div class="post">${s.post}</div><div class="spot-actions" style="flex-wrap:wrap;">${s.opts.map((o,i)=>`<button class="b-real" style="flex:1 1 45%;margin-bottom:8px;" onclick="simAnswer(${i})">${o[0]}</button>`).join('')}</div><div class="spot-result" id="simResult"></div></div>${simIdx<scenarios.length-1?'':'<button class="btn btn-primary btn-sm" onclick="simIdx=0;renderSim()">🔄 Restart</button>'}`;
+}
+function simAnswer(i){
+  const s=scenarios[simIdx];const r=document.getElementById('simResult');
+  r.style.display='block';r.textContent=s.opts[i][1];
+  setTimeout(()=>{if(simIdx<scenarios.length-1){simIdx++;renderSim();}unlockBadge('smart');},1800);
+}
+renderSim();
+
+/* ========== QUIZ (10 Questions with Timer) ========== */
+const QUIZ=[
+  {q:"What should you do before sharing a surprising post?",o:["Share it immediately","Verify with a reliable source","Ignore it"],c:1,e:"Always verify before sharing — surprising claims are often false.",d:"easy"},
+  {q:"Is a message true just because many people forwarded it?",o:["Yes, popularity means truth","No, forwarding doesn't confirm accuracy","Only if it has a photo"],c:1,e:"Forward count says nothing about accuracy.",d:"easy"},
+  {q:"What's the safest way to handle your passwords?",o:["Share with close friends","Use the same one everywhere","Use strong, unique passwords for each account"],c:2,e:"Unique, strong passwords limit damage if one account is breached.",d:"easy"},
+  {q:"Someone you don't know asks for your OTP. You should:",o:["Share it if they sound official","Never share it","Share only the last 2 digits"],c:1,e:"Legitimate organizations never ask for your OTP.",d:"medium"},
+  {q:"A post says 'Share Now! Urgent!' with no source. You should:",o:["Share to be safe","Pause and verify the source first","Comment 'is this real?' and share anyway"],c:1,e:"Urgency is a common manipulation tactic — pause and verify.",d:"medium"},
+  {q:"What is two-factor authentication (2FA)?",o:["Using two passwords","A second verification step beyond password","Sharing login with two people"],c:1,e:"2FA adds an extra layer of security beyond just your password.",d:"medium"},
+  {q:"Which URL is most likely a phishing attempt?",o:["facebook.com","faceb00k-login.xyz","fb.com"],c:1,e:"Misspelled domains with unusual TLDs are classic phishing indicators.",d:"hard"},
+  {q:"What should you do if you're being cyberbullied?",o:["Fight back online","Block, screenshot, and tell a trusted adult","Delete your account"],c:1,e:"Document evidence, block the bully, and seek help from trusted adults.",d:"hard"},
+  {q:"Is it safe to post your school name and daily routine online?",o:["Yes, it helps friends find you","No, it reveals too much personal info","Only on private accounts"],c:1,e:"Even on private accounts, this info can be screenshotted and shared.",d:"hard"},
+  {q:"A website offers a free prize if you enter your phone number. You should:",o:["Enter it — free prizes are great","Ignore it — legitimate prizes don't need personal data upfront","Enter a friend's number instead"],c:1,e:"Free prize scams harvest personal data. Never share info on untrusted sites.",d:"hard"}
+];
+let cur=0,score=0,answered=false,quizTimer=null,quizTimeLeft=15;
+
+function startQuiz(){
+  cur=0;score=0;answered=false;
+  document.getElementById('quizResult').style.display='none';
+  document.getElementById('quizArea').style.display='block';
+  renderQ();
+}
+function renderQ(){
+  answered=false;quizTimeLeft=15;
+  clearInterval(quizTimer);
+  document.getElementById('progFill').style.width=(cur/QUIZ.length*100)+'%';
+  const item=QUIZ[cur];
+  const diffClass=item.d==='easy'?'q-easy':item.d==='medium'?'q-medium':'q-hard';
+  const area=document.getElementById('quizArea');
+  area.innerHTML=`<div class="q-timer"><span id="qTimerText">⏱ 15s</span><div class="q-timer-bar"><div class="q-timer-fill" id="qTimerFill" style="width:100%"></div></div></div><span class="q-difficulty ${diffClass}">${item.d.toUpperCase()}</span><div class="q-text">Q${cur+1}. ${item.q}</div><div class="q-opts">${item.o.map((opt,i)=>`<button class="q-opt" onclick="answerQ(${i})">${opt}</button>`).join('')}</div><div class="q-explain" id="qExplain">${item.e}</div>`;
+  quizTimer=setInterval(()=>{
+    quizTimeLeft--;
+    document.getElementById('qTimerText').textContent='⏱ '+quizTimeLeft+'s';
+    document.getElementById('qTimerFill').style.width=(quizTimeLeft/15*100)+'%';
+    if(quizTimeLeft<=5)document.getElementById('qTimerFill').style.background='var(--rose)';
+    if(quizTimeLeft<=0){clearInterval(quizTimer);answerQ(-1);}
+  },1000);
+}
+function answerQ(i){
+  if(answered)return;answered=true;clearInterval(quizTimer);
+  const item=QUIZ[cur];
+  document.querySelectorAll('.q-opt').forEach((b,idx)=>{
+    if(idx===item.c) b.classList.add('correct');
+    else if(idx===i) b.classList.add('wrong');
+    b.onclick=null;
+  });
+  if(i===item.c) score++;
+  document.getElementById('qExplain').style.display='block';
+  setTimeout(()=>{cur++;if(cur<QUIZ.length){renderQ();}else{finishQuiz();}},1600);
+}
+function finishQuiz(){
+  clearInterval(quizTimer);
+  document.getElementById('progFill').style.width='100%';
+  document.getElementById('quizArea').style.display='none';
+  document.getElementById('quizResult').style.display='block';
+  const pct=Math.round(score/QUIZ.length*100);
+  document.getElementById('scoreText').textContent=score+"/"+QUIZ.length;
+  let label=pct<=40?"Keep Learning":pct<=60?"Good Awareness":pct<=80?"Strong Awareness":"Excellent Awareness! 🎉";
+  document.getElementById('scoreLabel').textContent=label+" ("+pct+"%)";
+  setRing('ringQuiz',pct);
+  unlockBadge('smart');
+  if(pct>=80) fireConfetti();
+  checkAllBadges();
+}
+startQuiz();
+
+/* ========== SURVEY ========== */
+function submitSurvey(e){
+  e.preventDefault();showToast("🎉 Thank You! Remember: Pause. Verify. Think. Then Share.");
+  unlockBadge('responsible');e.target.reset();fireConfetti();return false;
+}
+
+/* ========== SAFETY CHECKLIST ========== */
+const chkItems=["I use strong passwords","I don't share OTPs","I check privacy settings","I verify suspicious information","I don't click unknown links","I report harmful content","I think before sharing","I avoid sharing private information"];
+document.getElementById('chkList').innerHTML=chkItems.map((c,i)=>`<label class="chk-item"><input type="checkbox" id="chk${i}"> ${c}</label>`).join('');
+function checkSafety(){
+  let checked=0;
+  chkItems.forEach((c,i)=>{if(document.getElementById('chk'+i).checked)checked++;});
+  const pct=Math.round(checked/chkItems.length*100);
+  const el=document.getElementById('chkResult');el.style.display='block';
+  el.textContent="Safety Progress: "+pct+"% — "+(pct<50?"Review the unchecked habits above.":pct<90?"Good habits — strengthen a few areas.":"Excellent safety habits! 🎉");
+  setRing('ringSafety',pct);unlockBadge('privacy');
+  if(pct===100){unlockBadge('citizen');fireConfetti();}
+}
+
+/* ========== DASHBOARD ========== */
+function setRing(id,pct){const ring=document.getElementById(id);ring.style.setProperty('--p',pct);ring.querySelector('span').textContent=pct+'%';}
+function unlockBadge(key){
+  const el=document.getElementById('badge-'+key);
+  if(el&&!el.classList.contains('unlocked')){el.classList.add('unlocked');showToast("🏅 Badge unlocked: "+el.querySelector('p').textContent+"!");}
+}
+function checkAllBadges(){
+  const all=['privacy','fact','smart','responsible'].every(k=>document.getElementById('badge-'+k).classList.contains('unlocked'));
+  if(all) unlockBadge('citizen');
+}
+
+/* ========== RESOURCES SEARCH ========== */
+function filterResources(){
+  const q=document.getElementById('topicSearch').value.toLowerCase().trim();
+  let any=false;
+  document.querySelectorAll('#resGrid .res-card').forEach(c=>{
+    const match=!q||c.dataset.topic.includes(q)||c.textContent.toLowerCase().includes(q);
+    c.style.display=match?'':'none';if(match)any=true;
+  });
+  document.getElementById('noResults').style.display=any?'none':'block';
+}
+
+/* ========== PASSWORD STRENGTH CHECKER ========== */
+function checkPwd(){
+  const pwd=document.getElementById('pwdInput').value;
+  const meter=document.getElementById('pwdMeter');
+  const label=document.getElementById('pwdLabel');
+  const checks={len:pwd.length>=8,upper:/[A-Z]/.test(pwd),lower:/[a-z]/.test(pwd),num:/[0-9]/.test(pwd),special:/[^A-Za-z0-9]/.test(pwd),long:pwd.length>=12};
+  Object.keys(checks).forEach(k=>{
+    const el=document.getElementById('pc-'+k);
+    el.classList.toggle('pass',checks[k]);
+    el.querySelector('.crit-icon').textContent=checks[k]?'✓':'✕';
+  });
+  const passed=Object.values(checks).filter(Boolean).length;
+  let w,color,text;
+  if(pwd.length===0){w=0;color='#e2e8f0';text='Enter a password to test';}
+  else if(passed<=2){w=25;color='#f43f5e';text='🔴 Weak — easily cracked';}
+  else if(passed<=3){w=50;color='#f59e0b';text='🟡 Medium — needs improvement';}
+  else if(passed<=4){w=75;color='#3b82f6';text='🔵 Strong — good job!';}
+  else{w=100;color='#10b981';text='🟢 Very Strong — excellent!';}
+  meter.style.width=w+'%';meter.style.background=color;label.textContent=text;
+}
+function togglePwd(){
+  const inp=document.getElementById('pwdInput');
+  inp.type=inp.type==='password'?'text':'password';
+}
+
+/* ========== PHISHING DETECTOR ========== */
+function checkPhish(){
+  const url=document.getElementById('phishInput').value.trim().toLowerCase();
+  if(!url){showToast("Please enter a URL to check.");return;}
+  const flags=[];
+  const fakes=['faceb00k','g00gle','amaz0n','paypa1','instgram','twiter','whatsap','microsft','netfllx','app1e','gogle','yahooo'];
+  fakes.forEach(f=>{if(url.includes(f))flags.push("⚠️ Possible misspelling of a well-known domain: '"+f+"'");});
+  if(/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(url))flags.push("⚠️ Uses an IP address instead of a domain name.");
+  if(url.startsWith('http://')&&!url.startsWith('https://'))flags.push("⚠️ Uses HTTP instead of HTTPS (not encrypted).");
+  const subdomains=(url.replace(/^https?:\/\//,'').split('/')[0].match(/\./g)||[]).length;
+  if(subdomains>3)flags.push("⚠️ Excessive subdomains — possible obfuscation.");
+  const suspTlds=['.xyz','.tk','.ml','.ga','.cf','.gq','.buzz','.click','.top','.win','.loan'];
+  suspTlds.forEach(t=>{if(url.includes(t))flags.push("⚠️ Uses suspicious TLD: '"+t+"'");});
+  if(/login|verify|secure|account|update|confirm/i.test(url)&&flags.length>0)flags.push("⚠️ Contains login/security-related terms combined with other red flags.");
+  if(url.includes('@'))flags.push("⚠️ Contains '@' symbol — possible URL obfuscation.");
+  if(url.length>80)flags.push("⚠️ Unusually long URL.");
+
+  const badge=document.getElementById('phishBadge');
+  let level,cls;
+  if(flags.length===0){level="LOOKS SAFE";cls="risk-low";}
+  else if(flags.length<=2){level="SUSPICIOUS";cls="risk-mid";}
+  else{level="HIGH PHISHING RISK";cls="risk-high";}
+  badge.className="risk-badge "+cls;badge.textContent=level;
+  document.getElementById('phishFlags').innerHTML=flags.length?flags.map(f=>`<div class="phish-flag">${f}</div>`).join(''):'<div class="phish-flag">✅ No obvious phishing indicators found. Still verify independently!</div>';
+  document.getElementById('phishResult').style.display='block';
+}
+
+/* ========== DIGITAL FOOTPRINT ========== */
+function calcFootprint(){
+  const vals=['fp-accounts','fp-posting','fp-public','fp-location','fp-privacy'].map(id=>parseInt(document.getElementById(id).value));
+  const total=vals.reduce((a,b)=>a+b,0);
+  const maxScore=20;const pct=Math.round(total/maxScore*100);
+  const visual=document.getElementById('fpVisual');
+  const title=document.getElementById('fpTitle');
+  const desc=document.getElementById('fpDesc');
+  visual.className='fp-visual';
+  if(pct<=35){visual.classList.add('fp-small');visual.style.width='80px';visual.style.height='80px';title.textContent='🟢 Small Footprint';desc.textContent='Great job! Your online presence is minimal and well-managed.';}
+  else if(pct<=65){visual.classList.add('fp-medium');visual.style.width='120px';visual.style.height='120px';title.textContent='🟡 Medium Footprint';desc.textContent='Your online presence is moderate. Consider tightening some settings.';}
+  else{visual.classList.add('fp-large');visual.style.width='160px';visual.style.height='160px';title.textContent='🔴 Large Footprint';desc.textContent='Your digital footprint is significant. Review your privacy settings and sharing habits.';}
+  const tipsArr=[];
+  if(vals[2]>=3)tipsArr.push('• Switch profiles to private mode');
+  if(vals[3]>=3)tipsArr.push('• Disable location sharing on posts');
+  if(vals[4]>=3)tipsArr.push('• Read privacy policies before accepting');
+  if(vals[1]>=3)tipsArr.push('• Reduce posting frequency');
+  if(vals[0]>=3)tipsArr.push('• Deactivate unused accounts');
+  document.getElementById('fpTips').innerHTML=tipsArr.length?'<p style="font-weight:600;margin-bottom:8px;">Recommendations:</p>'+tipsArr.map(t=>`<p style="font-size:.88rem;color:var(--sub);margin-bottom:4px;">${t}</p>`).join(''):'<p style="font-size:.88rem;color:var(--emerald);text-align:center;">✅ No major concerns found!</p>';
+  document.getElementById('fpResult').style.display='block';
+}
+
+/* ========== SCREEN TIME CALCULATOR ========== */
+function calcScreenTime(){
+  const ids=['st-ig','st-wa','st-yt','st-tt','st-tw','st-gm'];
+  const daily=ids.reduce((a,id)=>a+parseFloat(document.getElementById(id).value||0),0);
+  const weekly=daily*7,monthly=daily*30,yearly=daily*365;
+  document.getElementById('stSummary').textContent=`Daily: ${daily.toFixed(1)}h | Weekly: ${weekly.toFixed(0)}h | Monthly: ${monthly.toFixed(0)}h | Yearly: ${yearly.toFixed(0)}h`;
+  const books=Math.floor(yearly/6);const skills=Math.floor(yearly/200);const movies=Math.floor(yearly/2);
+  document.getElementById('stComparison').innerHTML=`
+    <div class="st-comp"><div class="comp-num">${books}</div><p style="font-size:.85rem;color:var(--sub);margin-top:6px;">Books you could read</p></div>
+    <div class="st-comp"><div class="comp-num">${skills}</div><p style="font-size:.85rem;color:var(--sub);margin-top:6px;">Skills you could learn</p></div>
+    <div class="st-comp"><div class="comp-num">${movies}</div><p style="font-size:.85rem;color:var(--sub);margin-top:6px;">Movies you could watch</p></div>`;
+  document.getElementById('stResult').style.display='block';
+}
+
+/* ========== MYTH VS FACT ========== */
+const MVF=[
+  {s:"Incognito mode makes you completely anonymous online.",a:"myth",e:"Incognito only prevents local browsing history. Your ISP, employer, and websites can still track you."},
+  {s:"Changing your password regularly improves security.",a:"fact",e:"Regular password changes reduce the risk of compromised credentials being exploited long-term."},
+  {s:"Public Wi-Fi is safe if it has a password.",a:"myth",e:"Password-protected Wi-Fi can still be intercepted. Use VPN for sensitive activities on public networks."},
+  {s:"Cyberbullying only happens to young children.",a:"myth",e:"Cyberbullying affects people of all ages, including teens and adults."},
+  {s:"Screenshots of messages can be used as evidence of cyberbullying.",a:"fact",e:"Screenshots are valuable evidence when reporting cyberbullying to authorities or platforms."},
+  {s:"A post with many likes and shares is probably true.",a:"myth",e:"Virality has nothing to do with accuracy. Misinformation often spreads faster than facts."},
+  {s:"Two-factor authentication significantly reduces account hacking.",a:"fact",e:"2FA adds a crucial extra layer of security beyond passwords."},
+  {s:"Deleting a post means it's gone from the internet forever.",a:"myth",e:"Once shared, content can be screenshotted, cached, or archived by others and services."}
+];
+let mvfIdx=0,mvfScore=0,mvfAnswered=false;
+document.getElementById('mvfTotal').textContent=MVF.length;
+function startMvf(){
+  mvfIdx=0;mvfScore=0;mvfAnswered=false;
+  document.getElementById('mvfEnd').style.display='none';
+  document.getElementById('mvfBtns').style.display='flex';
+  document.getElementById('mvfStatement').style.display='flex';
+  document.getElementById('mvfAnswer').style.display='none';
+  renderMvf();
+}
+function renderMvf(){
+  mvfAnswered=false;
+  document.getElementById('mvfIdx').textContent=mvfIdx+1;
+  document.getElementById('mvfScore').textContent=mvfScore;
+  document.getElementById('mvfProgress').style.width=(mvfIdx/MVF.length*100)+'%';
+  document.getElementById('mvfStatement').textContent=MVF[mvfIdx].s;
+  document.getElementById('mvfAnswer').style.display='none';
+  document.getElementById('mvfBtns').style.display='flex';
+}
+function mvfAnswer(choice){
+  if(mvfAnswered)return;mvfAnswered=true;
+  const item=MVF[mvfIdx];const correct=choice===item.a;
+  if(correct)mvfScore++;
+  document.getElementById('mvfScore').textContent=mvfScore;
+  const ans=document.getElementById('mvfAnswer');
+  ans.style.display='block';
+  ans.style.background=correct?'rgba(16,185,129,0.1)':'rgba(244,63,94,0.1)';
+  ans.style.border='1px solid '+(correct?'rgba(16,185,129,0.3)':'rgba(244,63,94,0.3)');
+  ans.innerHTML=`<strong>${correct?'✅ Correct!':'❌ Wrong!'}</strong> It's a <strong>${item.a.toUpperCase()}</strong>. ${item.e}`;
+  setTimeout(()=>{
+    mvfIdx++;
+    if(mvfIdx<MVF.length){renderMvf();}
+    else{
+      document.getElementById('mvfBtns').style.display='none';
+      document.getElementById('mvfStatement').style.display='none';
+      document.getElementById('mvfAnswer').style.display='none';
+      document.getElementById('mvfProgress').style.width='100%';
+      document.getElementById('mvfEnd').style.display='block';
+      document.getElementById('mvfFinalScore').textContent=mvfScore+'/'+MVF.length;
+      const pct=Math.round(mvfScore/MVF.length*100);
+      document.getElementById('mvfFinalLabel').textContent=pct>=75?'Excellent! You know your facts! 🎉':pct>=50?'Good job! Keep learning!':'Keep learning — knowledge is power!';
+      if(pct>=75)fireConfetti();
+    }
+  },2000);
+}
+startMvf();
+
+/* ========== PRIVACY AUDIT ========== */
+const auditData=[
+  {name:'Instagram',icon:'📸',checks:['Set account to Private','Disable Activity Status','Review tagged photos before they appear','Turn off location for posts','Limit story sharing to Close Friends','Review third-party app access']},
+  {name:'WhatsApp',icon:'💬',checks:['Set Profile Photo to "My Contacts"','Disable Read Receipts','Set Last Seen to "Nobody"','Enable Two-Step Verification','Disable auto-download of media','Review group privacy settings']},
+  {name:'YouTube',icon:'▶️',checks:['Set subscriptions to private','Pause watch history','Pause search history','Review connected apps','Disable personalized ads','Review channel visibility']},
+  {name:'Facebook',icon:'📘',checks:['Set posts to "Friends Only"','Disable face recognition','Review app permissions','Limit who can send friend requests','Turn off location history','Review timeline and tagging settings']},
+  {name:'Twitter/X',icon:'🐦',checks:['Protect your tweets','Disable location tagging','Review connected apps','Enable two-factor authentication','Control who can tag you','Disable personalization and data']}
+];
+const auditState={};
+function renderAudit(){
+  document.getElementById('auditPlatforms').innerHTML=auditData.map((p,i)=>`<div class="audit-platform" onclick="showAuditPlatform(${i})" id="ap-${i}"><div class="platform-icon">${p.icon}</div><div class="platform-name">${p.name}</div></div>`).join('');
+}
+function showAuditPlatform(idx){
+  document.querySelectorAll('.audit-platform').forEach(el=>el.classList.remove('active'));
+  document.getElementById('ap-'+idx).classList.add('active');
+  const p=auditData[idx];
+  if(!auditState[idx])auditState[idx]=new Array(p.checks.length).fill(false);
+  const cl=document.getElementById('auditChecklist');
+  cl.classList.add('active');
+  cl.innerHTML=`<h4 style="margin-bottom:14px;">${p.icon} ${p.name} Privacy Settings</h4>`+p.checks.map((c,i)=>`<label class="chk-item"><input type="checkbox" ${auditState[idx][i]?'checked':''} onchange="auditCheck(${idx},${i},this.checked)"> ${c}</label>`).join('');
+  updateAuditScore();
+}
+function auditCheck(pidx,cidx,val){
+  auditState[pidx][cidx]=val;updateAuditScore();
+}
+function updateAuditScore(){
+  let total=0,checked=0;
+  Object.keys(auditState).forEach(k=>{auditState[k].forEach(v=>{total++;if(v)checked++;});});
+  if(total===0){document.getElementById('auditProgress').style.display='none';return;}
+  const pct=Math.round(checked/total*100);
+  document.getElementById('auditProgress').style.display='block';
+  document.getElementById('auditScoreText').textContent=pct+'%';
+  document.getElementById('auditBar').style.width=pct+'%';
+}
+renderAudit();
+
+/* ========== CYBERBULLYING DECISION TREE ========== */
+const cbTree={
+  start:{q:"Are you or someone you know experiencing cyberbullying?",opts:[{text:"Yes, I'm being bullied",next:"victim"},{text:"Yes, someone I know is",next:"witness"},{text:"I want to learn about it",next:"learn"}]},
+  victim:{q:"What type of bullying are you experiencing?",opts:[{text:"Hurtful messages or comments",next:"v-msg"},{text:"Someone sharing my photos/info without permission",next:"v-photo"},{text:"Being excluded or targeted in groups",next:"v-group"},{text:"Threats or intimidation",next:"v-threat"}]},
+  witness:{q:"What's happening to the person?",opts:[{text:"They're receiving mean messages",next:"w-help"},{text:"Their private info is being shared",next:"w-help"},{text:"They're being threatened",next:"w-urgent"}]},
+  learn:{q:"What would you like to know?",opts:[{text:"Signs of cyberbullying",next:"l-signs"},{text:"How to prevent it",next:"l-prevent"},{text:"How to report it",next:"l-report"}]},
+  "v-msg":{result:"📌 Steps to take:\n1. Don't respond to the bully\n2. Screenshot all messages as evidence\n3. Block the person on all platforms\n4. Report the messages to the platform\n5. Tell a trusted adult (parent, teacher, counselor)\n6. If you feel unsafe, contact helpline: 1098"},
+  "v-photo":{result:"📌 Steps to take:\n1. Screenshot the post as evidence\n2. Report the content to the platform for removal\n3. Block the person who shared it\n4. Tell a trusted adult immediately\n5. If it involves sensitive images, contact cybercrime helpline: 1930"},
+  "v-group":{result:"📌 Steps to take:\n1. Leave the group if it's hostile\n2. Screenshot any bullying messages\n3. Report the group to the platform\n4. Talk to a trusted friend or adult\n5. Remember: you're not alone and it's not your fault"},
+  "v-threat":{result:"🚨 This is urgent:\n1. Do NOT respond to threats\n2. Screenshot everything immediately\n3. Tell a parent/guardian right away\n4. Report to cybercrime helpline: 1930\n5. Report to the platform\n6. If there's immediate danger, contact police"},
+  "w-help":{result:"📌 How to help:\n1. Support the person — let them know they're not alone\n2. Help them screenshot evidence\n3. Encourage them to tell a trusted adult\n4. Report the bullying content yourself\n5. Don't share or forward bullying content\n6. Stand up — don't be a bystander"},
+  "w-urgent":{result:"🚨 This needs immediate action:\n1. Help them save/screenshot evidence\n2. Tell a trusted adult together\n3. Help report to cybercrime helpline: 1930\n4. Report the content on the platform\n5. If there's immediate danger, contact police"},
+  "l-signs":{result:"🔍 Signs of cyberbullying:\n• Receiving repeated mean messages\n• Someone spreading rumors online\n• Being deliberately excluded from groups\n• Having private photos shared without consent\n• Being impersonated with fake accounts\n• Receiving threats or intimidation\n• Being targeted with hateful comments"},
+  "l-prevent":{result:"🛡 Prevention tips:\n• Keep profiles private\n• Don't share personal info publicly\n• Think before posting or commenting\n• Don't respond to provocative messages\n• Keep evidence of any bullying\n• Know how to block and report on each platform\n• Build a trusted support network"},
+  "l-report":{result:"📞 How to report:\n• Use the platform's report/block features\n• Contact Childline: 1098\n• Contact Cybercrime Helpline: 1930\n• Report online at: cybercrime.gov.in\n• Tell a teacher, parent, or school counselor\n• Save all evidence before reporting"}
+};
+function startCbTree(){renderCbNode('start');}
+function renderCbNode(key){
+  const node=cbTree[key];const tree=document.getElementById('cbTree');
+  if(node.result){
+    tree.innerHTML=`<div class="cb-result"><p style="white-space:pre-line;font-size:.9rem;line-height:1.8;">${node.result}</p></div>`;
+    return;
+  }
+  tree.innerHTML=`<div class="cb-node"><h4>${node.q}</h4><div class="cb-options">${node.opts.map(o=>`<button class="cb-opt" onclick="renderCbNode('${o.next}')">${o.text}</button>`).join('')}</div></div>`;
+}
+startCbTree();
+
+/* ========== PLEDGE WALL ========== */
+function loadPledges(){
+  const pledges=JSON.parse(localStorage.getItem('sma_pledges')||'[]');
+  document.getElementById('pledgeWall').innerHTML=pledges.map(p=>`<div class="pledge-card"><p>"${p.text}"</p><div class="pledge-date">${p.date}</div></div>`).join('')||'<p style="text-align:center;color:var(--sub);font-size:.88rem;padding:20px;">No pledges yet. Be the first!</p>';
+}
+function submitPledge(){
+  const input=document.getElementById('pledgeInput');
+  const text=input.value.trim();
+  if(!text){showToast("Please write a pledge first!");return;}
+  savePledge(text);input.value='';
+}
+function quickPledge(btn){savePledge(btn.textContent);}
+function savePledge(text){
+  const pledges=JSON.parse(localStorage.getItem('sma_pledges')||'[]');
+  pledges.unshift({text,date:new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})});
+  if(pledges.length>20)pledges.pop();
+  localStorage.setItem('sma_pledges',JSON.stringify(pledges));
+  loadPledges();showToast("✍️ Pledge submitted! Thank you!");fireConfetti();
+}
+loadPledges();
+
+/* ========== CERTIFICATE ========== */
+function generateCert(){
+  const name=document.getElementById('certName').value.trim();
+  if(!name){showToast("Please enter your name first!");return;}
+  document.getElementById('certNameDisplay').textContent=name;
+  const quizPct=document.getElementById('ringQuiz').querySelector('span').textContent;
+  const safetyPct=document.getElementById('ringSafety').querySelector('span').textContent;
+  document.getElementById('certScoreDisplay').textContent=`Quiz: ${quizPct} | Safety: ${safetyPct}`;
+  document.getElementById('certDate').textContent='Date: '+new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('certContainer').style.display='block';
+  fireConfetti();showToast("🏆 Certificate generated!");
+}
+
+/* ========== EMOJI POLLS ========== */
+function votePoll(pollId,choice){
+  const key='sma_poll_'+pollId;
+  const votes=JSON.parse(localStorage.getItem(key)||'[0,0,0,0]');
+  votes[choice]++;
+  localStorage.setItem(key,JSON.stringify(votes));
+  renderPollBars(pollId,votes,choice);
+}
+function renderPollBars(pollId,votes,selected){
+  const emojis=['😟','😐','🙂','😄'];
+  const total=votes.reduce((a,b)=>a+b,0)||1;
+  const container=document.getElementById(pollId+'PollBars');
+  container.innerHTML=votes.map((v,i)=>{
+    const pct=Math.round(v/total*100);
+    return `<div class="poll-bar"><span>${emojis[i]}</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden;"><div class="poll-bar-fill" style="width:${pct}%"></div></div><span>${pct}%</span></div>`;
+  }).join('');
+  // Highlight selected emoji
+  document.querySelectorAll(`#${pollId}Poll .emoji-opt`).forEach((el,i)=>{
+    el.classList.toggle('selected',i===selected);
+  });
+}
+// Load existing poll data
+['privacy'].forEach(id=>{
+  const votes=JSON.parse(localStorage.getItem('sma_poll_'+id)||'[0,0,0,0]');
+  if(votes.some(v=>v>0)) renderPollBars(id,votes,-1);
+});
+
+/* ========== CONFETTI ========== */
+function fireConfetti(){
+  const canvas=document.getElementById('confettiCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const pieces=[];const colors=['#3b82f6','#8b5cf6','#a855f7','#06b6d4','#10b981','#f43f5e','#f59e0b'];
+  for(let i=0;i<120;i++){
+    pieces.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,w:Math.random()*10+5,h:Math.random()*6+3,color:colors[Math.floor(Math.random()*colors.length)],dx:(Math.random()-.5)*6,dy:Math.random()*4+3,rot:Math.random()*360,dr:Math.random()*8-4,life:1});
+  }
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    let alive=false;
+    pieces.forEach(p=>{
+      if(p.life<=0)return;alive=true;
+      p.x+=p.dx;p.y+=p.dy;p.dy+=0.1;p.rot+=p.dr;p.life-=0.008;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+      ctx.globalAlpha=p.life;ctx.fillStyle=p.color;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
+    });
+    if(alive&&frame<300){frame++;requestAnimationFrame(draw);}
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+  draw();
+}
+
+/* ========== KEYBOARD SHORTCUTS ========== */
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;
+  if(e.key==='d'||e.key==='D'){themeBtn.click();e.preventDefault();}
+  if(e.key==='t'||e.key==='T'){nextTip();showToast(document.getElementById('tipText').textContent);e.preventDefault();}
+  if(e.key==='q'||e.key==='Q'){document.getElementById('quiz').scrollIntoView({behavior:'smooth'});e.preventDefault();}
+  if(e.key==='?'){document.getElementById('kbModal').classList.toggle('open');e.preventDefault();}
+  if(e.key==='Escape'){document.getElementById('kbModal').classList.remove('open');}
+  if(e.key==='Home'){window.scrollTo({top:0,behavior:'smooth'});e.preventDefault();}
+});
+</script>
+</body>
+</html>
